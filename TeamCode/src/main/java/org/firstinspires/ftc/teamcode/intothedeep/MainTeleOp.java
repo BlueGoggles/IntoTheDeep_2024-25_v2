@@ -57,7 +57,7 @@ public class MainTeleOp extends LinearOpMode {
         RobotHardware robot = new RobotHardware(this);
         robot.initialize();
         robot.initializeIMU();
-        robot.initializeDroneLauncher();
+//        robot.initializeDroneLauncher();
         sleep(100);
 
         FL_Power = 0;
@@ -196,9 +196,9 @@ public class MainTeleOp extends LinearOpMode {
 
                 // NOTE: This program is single threaded right now. So we can't do multiple operations at once.
                 // Use this function to check and see if the viper slide or lead screw need to be stopped.
-                Utility.checkSlideAndScrewMotors(robot);
+//                Utility.checkSlideAndScrewMotors(robot);
                 // Use this function to ensure that pan is moved to the correct position without a blocking while loop.
-                Utility.checkPanPosition(robot);
+//                Utility.checkPanPosition(robot);
                 // We're not using this right now.
                 /*
                 if( droneLauncherWaitTimer.time() > Constants.END_GAME_LOCKOUT_TIME ) {
@@ -215,40 +215,40 @@ public class MainTeleOp extends LinearOpMode {
                 if( allowLeadScrew ) {
                     // Extend the lead screw.
                     if (gamepad1.left_bumper) {
-                        Utility.controlLeadScrew(robot, DcMotorEx.Direction.FORWARD);
+//                        Utility.controlLeadScrew(robot, DcMotorEx.Direction.FORWARD);
                     }
 
                     // Retract the lead screw.
                     if (gamepad1.right_bumper) {
-                        Utility.controlLeadScrew(robot, DcMotorEx.Direction.REVERSE);
+//                        Utility.controlLeadScrew(robot, DcMotorEx.Direction.REVERSE);
                     }
                 }
 
                 // Control the viper slide.
                 if (gamepad2.a) {
-                    Utility.panHome(robot);
-                    Utility.resetViperSlide(robot);
+//                    Utility.panHome(robot);
+//                    Utility.resetViperSlide(robot);
                 }
 
                 if (gamepad2.b) {
-                    Utility.extendViperSlide(robot,false, Utility.StageLocations.BACK);
-                    Utility.panDelivery(robot);
+//                    Utility.extendViperSlide(robot,false, Utility.StageLocations.BACK);
+//                    Utility.panDelivery(robot);
                 }
 
                 if (gamepad2.y) {
-                    Utility.retractViperSlide(robot);
+//                    Utility.retractViperSlide(robot);
                 }
 
                 if( gamepad2.left_trigger > 0.5 ) {
-                    Utility.nudgeViperSlide(robot, Utility.ViperSlideDirection.DOWN);
+//                    Utility.nudgeViperSlide(robot, Utility.ViperSlideDirection.DOWN);
                 }
 
                 if( gamepad2.right_trigger > 0.5 ) {
-                    Utility.nudgeViperSlide(robot, Utility.ViperSlideDirection.UP);
+//                    Utility.nudgeViperSlide(robot, Utility.ViperSlideDirection.UP);
                 }
 
                 if ( gamepad1.a ) {
-                    robot.getLeadScrewSwitch().setPosition(0.4);
+//                    robot.getLeadScrewSwitch().setPosition(0.4);
                     // Tell the program that it's okay to control the lead screw.
                     allowLeadScrew = true;
                 }
@@ -260,7 +260,7 @@ public class MainTeleOp extends LinearOpMode {
                 }
 
                 if ( gamepad1.start ) {
-                    robot.getDroneLauncher().setPosition(0.4);
+//                    robot.getDroneLauncher().setPosition(0.4);
                 }
 
                 // Press this button to reset the yaw during Teleop. Only allow this to happen if we are in manual mode.
@@ -279,10 +279,10 @@ public class MainTeleOp extends LinearOpMode {
                 telemetry.addData("Intake Wheel Power (gamepad2.rightTrigger[forward]/leftTrigger[backword])", robot.getIntakeWheel().getPower());
                 telemetry.addData("Intake Belt Power (gamepad2.rightTrigger[forward]/leftTrigger[backword])", robot.getIntakeBelt().getPower());
 
-                telemetry.addData("Lead Screw Position", robot.getLeadScrewPosition());
-                telemetry.addData("Viper Slide Encoder Position", robot.getViperSlidePosition());
-                telemetry.addData("Viper Current Position", Utility.getViperSlideCurrentState());
-                telemetry.addData("Viper Requested Position", Utility.getViperSlideRequestedState());
+//                telemetry.addData("Lead Screw Position", robot.getLeadScrewPosition());
+//                telemetry.addData("Viper Slide Encoder Position", robot.getViperSlidePosition());
+//                telemetry.addData("Viper Current Position", Utility.getViperSlideCurrentState());
+//                telemetry.addData("Viper Requested Position", Utility.getViperSlideRequestedState());
                 telemetry.addData("Lead Screw Forward (gamepad1.left_bumper)", gamepad1.left_bumper);
                 telemetry.addData("Lead Screw Reverse (gamepad1.right_bumper)", gamepad1.right_bumper);
 
@@ -294,7 +294,7 @@ public class MainTeleOp extends LinearOpMode {
 
                 telemetry.addData("Pan Door start/stop (gamepad2.left_bumper)", gamepad2.left_bumper);
 
-                telemetry.addData("Drone Launcher Position", robot.getDroneLauncher().getPosition());
+//                telemetry.addData("Drone Launcher Position", robot.getDroneLauncher().getPosition());
 
                 telemetry.addData("Joystick Z (gamepage1.left_stick_x", Joystick_Z);
 
