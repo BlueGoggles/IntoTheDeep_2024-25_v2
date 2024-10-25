@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 @Autonomous(name = "Frontstage Red - Corner", group = "FrontstageRedAuton")
+@Disabled
 public class FrontstageRed extends LinearOpMode {
 
     protected RobotHardware robot = new RobotHardware(this);

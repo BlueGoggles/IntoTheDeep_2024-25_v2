@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous(name = "Frontstage Red - Non Corner", group = "FrontstageRedAuton")
+@Disabled
 public class FrontstageRedNonCorner extends FrontstageRed {
 
     protected void parkRobot() {

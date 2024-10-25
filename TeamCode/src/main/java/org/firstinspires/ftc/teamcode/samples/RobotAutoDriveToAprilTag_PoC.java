@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Autonomous(name="Robot: Auto Drive To AprilTag PoC", group = "Samples")
+@Disabled
 public class RobotAutoDriveToAprilTag_PoC extends LinearOpMode
 {
     RobotHardware robot = new RobotHardware(this);

@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 @Autonomous(name = "Frontstage Blue - ExtraOrdinary - Non Corner", group = "FrontstageBlueAuton")
+@Disabled
 public class FrontstageBlueExtraOrdinary extends FrontstageBlueNonCorner {
 
     protected void placeSecondPixel(RobotHardware robot) {
