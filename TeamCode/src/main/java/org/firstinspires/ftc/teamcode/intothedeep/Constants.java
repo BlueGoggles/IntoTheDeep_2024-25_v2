@@ -5,8 +5,13 @@ public interface Constants {
     String DEVICE_FRONT_RIGHT = "frontRight";
     String DEVICE_BACK_LEFT = "backLeft";
     String DEVICE_BACK_RIGHT = "backRight";
-    String DEVICE_INTAKE_WHEEL = "intakeWheel";
-    String DEVICE_INTAKE_BELT = "intakeBelt";
+
+    String DEVICE_LEFT_SLIDE = "leftSlide";
+    String DEVICE_RIGHT_SLIDE = "rightSlide";
+
+    String DEVICE_RIGHT_TURN = "rightTurn";
+    String DEVICE_LEFT_TURN = "leftTurn";
+
     String DEVICE_VIPER_SLIDE = "viperSlide";
     String DEVICE_LEAD_SCREW = "leadScrew";
     String DEVICE_PAN_SERVO = "panServo";

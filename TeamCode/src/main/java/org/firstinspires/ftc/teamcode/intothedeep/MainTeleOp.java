@@ -189,10 +189,10 @@ public class MainTeleOp extends LinearOpMode {
                     intakePower = -1;
                 }
 
-                robot.getIntakeWheel().setPower(intakePower);
-                robot.getIntakeBelt().setPower(intakePower);
-                robot.getIntakeWheel().setPower(intakePower);
-                robot.getIntakeBelt().setPower(intakePower);
+//                robot.getIntakeWheel().setPower(intakePower);
+//                robot.getIntakeBelt().setPower(intakePower);
+//                robot.getIntakeWheel().setPower(intakePower);
+//                robot.getIntakeBelt().setPower(intakePower);
 
                 // NOTE: This program is single threaded right now. So we can't do multiple operations at once.
                 // Use this function to check and see if the viper slide or lead screw need to be stopped.
@@ -276,8 +276,8 @@ public class MainTeleOp extends LinearOpMode {
                 telemetry.addData("Back Left Pow", robot.getLeftBack().getPower());
                 telemetry.addData("Back Right Pow", robot.getRightBack().getPower());
 
-                telemetry.addData("Intake Wheel Power (gamepad2.rightTrigger[forward]/leftTrigger[backword])", robot.getIntakeWheel().getPower());
-                telemetry.addData("Intake Belt Power (gamepad2.rightTrigger[forward]/leftTrigger[backword])", robot.getIntakeBelt().getPower());
+//                telemetry.addData("Intake Wheel Power (gamepad2.rightTrigger[forward]/leftTrigger[backword])", robot.getIntakeWheel().getPower());
+//                telemetry.addData("Intake Belt Power (gamepad2.rightTrigger[forward]/leftTrigger[backword])", robot.getIntakeBelt().getPower());
 
 //                telemetry.addData("Lead Screw Position", robot.getLeadScrewPosition());
 //                telemetry.addData("Viper Slide Encoder Position", robot.getViperSlidePosition());

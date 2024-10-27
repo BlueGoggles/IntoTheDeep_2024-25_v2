@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.intothedeep;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -26,8 +27,11 @@ public class RobotHardware {
     private DcMotorEx rightFront = null;
     private DcMotorEx leftBack = null;
     private DcMotorEx rightBack = null;
-    private DcMotorEx intakeWheel = null;
-    private DcMotorEx intakeBelt = null;
+    private DcMotorEx leftSlide = null;
+    private DcMotorEx rightSlide = null;
+    private DcMotorEx leftTurn = null;
+    private DcMotorEx rightTurn = null;
+
     //    private DcMotorEx viperSlide = null;
 //    private DcMotorEx leadScrew = null;
     private Servo panServo = null;
@@ -69,8 +73,11 @@ public class RobotHardware {
         leftBack  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_BACK_LEFT);
         rightBack = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_BACK_RIGHT);
         // Expansion hub motors
-//        intakeWheel  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_INTAKE_WHEEL);
-//        intakeBelt = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_INTAKE_BELT);
+        leftSlide  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_LEFT_SLIDE);
+        rightSlide = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_RIGHT_SLIDE);
+        leftTurn  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_LEFT_TURN);
+        rightTurn = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_RIGHT_TURN);
+
 //        viperSlide  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_VIPER_SLIDE);
 //        leadScrew = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_LEAD_SCREW);
 //        // Servos
@@ -92,8 +99,11 @@ public class RobotHardware {
         getLeftBack().setDirection(DcMotorEx.Direction.REVERSE);
         getRightBack().setDirection(DcMotorEx.Direction.FORWARD);
 
-//        getIntakeWheel().setDirection(DcMotorEx.Direction.REVERSE);
-//        getIntakeBelt().setDirection(DcMotorEx.Direction.FORWARD);
+        getLeftSlide().setDirection(DcMotorEx.Direction.FORWARD);
+        getRightSlide().setDirection(DcMotorEx.Direction.REVERSE);
+
+        getLeftTurn().setDirection(DcMotorEx.Direction.FORWARD);
+        getRightTurn().setDirection(DcMotorEx.Direction.REVERSE);
 
 //        this.getViperSlide().setDirection(DcMotorEx.Direction.REVERSE);
 //        this.getLeadScrew().setDirection(DcMotorEx.Direction.FORWARD);
@@ -106,6 +116,12 @@ public class RobotHardware {
 //        this.getLeadScrew().setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
         setMotorPowers(Constants.ZERO_POWER);
+
+        this.getLeftSlide().setPower(Constants.ZERO_POWER);
+        this.getRightSlide().setPower(Constants.ZERO_POWER);
+
+        this.getLeftTurn().setPower(Constants.ZERO_POWER);
+        this.getRightTurn().setPower(Constants.ZERO_POWER);
     }
 
     public void setMotorPowers(double leftFront, double rightFront, double leftBack, double rightBack) {
@@ -113,6 +129,16 @@ public class RobotHardware {
         this.getRightFront().setPower(rightFront);
         this.getLeftBack().setPower(leftBack);
         this.getRightBack().setPower(rightBack);
+    }
+
+    public void setMotorPowersForSlide(double speed) {
+        this.getLeftSlide().setPower(speed);
+        this.getRightSlide().setPower(speed);
+    }
+
+    public void setMotorPowersForTurn(double speed) {
+        this.getLeftTurn().setPower(speed);
+        this.getRightTurn().setPower(speed);
     }
 
     public void setMotorPowers(double allWhealPower) {
@@ -126,11 +152,74 @@ public class RobotHardware {
         getRightBack().setMode(mode);
     }
 
+    public void setModeForSlide(DcMotorEx.RunMode mode) {
+        getLeftSlide().setMode(mode);
+        getRightSlide().setMode(mode);
+    }
+
+    public void setModeForTurn(DcMotorEx.RunMode mode) {
+        getLeftTurn().setMode(mode);
+        getRightTurn().setMode(mode);
+    }
+
     public void setZeroPowerBehavior() {
         getLeftFront().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         getRightFront().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         getLeftBack().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         getRightBack().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+    }
+
+    public void setZeroPowerBehaviorForSlide() {
+        getLeftSlide().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        getRightSlide().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+    }
+
+    public void setZeroPowerBehaviorForTurn() {
+        getLeftTurn().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        getRightTurn().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+    }
+
+    public void slide(Utility.Direction direction, double slideInches) {
+
+        int leftSlideTarget = getLeftSlide().getCurrentPosition();
+        int rightSlideTarget= getRightSlide().getCurrentPosition();
+        myOpMode.telemetry.addData("leftSlideTarget: ", leftSlideTarget);
+        myOpMode.telemetry.addData("rightSlideTarget: ", rightSlideTarget);
+
+        // Determine new target position, and pass to motor controller
+        if (direction == Utility.Direction.FORWARD) {
+            leftSlideTarget = leftSlideTarget + (int) (slideInches * COUNTS_PER_INCH);
+            rightSlideTarget = rightSlideTarget + (int) (slideInches * COUNTS_PER_INCH);
+        } else if (direction == Utility.Direction.BACKWARD) {
+            leftSlideTarget = leftSlideTarget - (int) (slideInches * COUNTS_PER_INCH);
+            rightSlideTarget = rightSlideTarget - (int) (slideInches * COUNTS_PER_INCH);
+        }
+
+        myOpMode.telemetry.addData("leftSlideTarget: ", leftSlideTarget);
+        myOpMode.telemetry.addData("rightSlideTarget: ", rightSlideTarget);
+        myOpMode.telemetry.update();
+        // Set the Target Position
+        getLeftSlide().setTargetPosition(leftSlideTarget);
+        getRightSlide().setTargetPosition(rightSlideTarget);
+    }
+
+    public void turn(Utility.Direction direction, double turnInches) {
+
+        int leftTurnTarget = getLeftTurn().getCurrentPosition();
+        int rightTurnTarget= getRightTurn().getCurrentPosition();
+
+        // Determine new target position, and pass to motor controller
+        if (direction == Utility.Direction.FORWARD) {
+            leftTurnTarget = leftTurnTarget + (int) (turnInches * COUNTS_PER_INCH);
+            rightTurnTarget = rightTurnTarget + (int) (turnInches * COUNTS_PER_INCH);
+        } else if (direction == Utility.Direction.BACKWARD) {
+            leftTurnTarget = leftTurnTarget - (int) (turnInches * COUNTS_PER_INCH);
+            rightTurnTarget = rightTurnTarget - (int) (turnInches * COUNTS_PER_INCH);
+        }
+
+        // Set the Target Position
+        getLeftTurn().setTargetPosition(leftTurnTarget);
+        getRightTurn().setTargetPosition(rightTurnTarget);
     }
 
     public void setTargetPosition(Utility.Direction direction, double leftFrontInches, double rightFrontInches, double leftBackInches, double rightBackInches) {
@@ -269,12 +358,20 @@ public class RobotHardware {
         return this.rightBack;
     }
 
-    public DcMotorEx getIntakeWheel() {
-        return this.intakeWheel;
+    public DcMotorEx getRightSlide() {
+        return rightSlide;
     }
 
-    public DcMotorEx getIntakeBelt() {
-        return this.intakeBelt;
+    public DcMotorEx getLeftSlide() {
+        return leftSlide;
+    }
+
+    public DcMotorEx getLeftTurn() {
+        return leftTurn;
+    }
+
+    public DcMotorEx getRightTurn() {
+        return rightTurn;
     }
 
     public Servo getPanServo() {

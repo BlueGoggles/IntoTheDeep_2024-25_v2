@@ -94,11 +94,72 @@ public class Utility {
         robot.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         robot.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
+        robot.setModeForSlide(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        robot.setModeForTurn(DcMotorEx.RunMode.RUN_USING_ENCODER);
+
         // Initialize Gyro sensor
         robot.initializeIMU();
 
         robot.getMyOpMode().sleep(2000);
 
+    }
+
+    public static void slide(RobotHardware robot, Utility.Direction direction, double inches, double speed) {
+
+        // Ensure that the OpMode is still active
+        if (robot.getMyOpMode().opModeIsActive()) {
+
+            // Set Target Position
+            robot.slide(direction, inches);
+
+
+            // Turn On RUN_TO_POSITION
+            robot.setModeForSlide(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+            // Start the motion.
+            robot.setMotorPowersForSlide(Math.abs(speed));
+
+            while (robot.getMyOpMode().opModeIsActive() &&
+                    (robot.getLeftSlide().isBusy() && robot.getRightSlide().isBusy())) {
+                // Engage the control
+            }
+
+            // Stop all motion;
+            robot.setMotorPowersForSlide(Constants.ZERO_POWER);
+            robot.setZeroPowerBehaviorForSlide();
+
+            // Turn off RUN_TO_POSITION
+            robot.setModeForSlide(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        }
+    }
+
+    public static void turn(RobotHardware robot, Utility.Direction direction, double inches, double speed) {
+
+        // Ensure that the OpMode is still active
+        if (robot.getMyOpMode().opModeIsActive()) {
+
+            // Set Target Position
+            robot.turn(direction, inches);
+
+
+            // Turn On RUN_TO_POSITION
+            robot.setModeForTurn(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+            // Start the motion.
+            robot.setMotorPowersForTurn(Math.abs(speed));
+
+            while (robot.getMyOpMode().opModeIsActive() &&
+                    (robot.getLeftTurn().isBusy() && robot.getRightTurn().isBusy())) {
+                // Engage the control
+            }
+
+            // Stop all motion;
+            robot.setMotorPowersForTurn(Constants.ZERO_POWER);
+            robot.setZeroPowerBehaviorForTurn();
+
+            // Turn off RUN_TO_POSITION
+            robot.setModeForTurn(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        }
     }
 
     public static void encoderDrive(RobotHardware robot, Utility.Direction direction, double speed, double leftFrontInches, double rightFrontInches, double leftBackInches, double rightBackInches) {
@@ -131,7 +192,7 @@ public class Utility {
     public static void encoderDrive(RobotHardware robot, Utility.Direction direction, double speed, double inches) {
 
         if (direction == Utility.Direction.LEFT || direction == Utility.Direction.RIGHT) {
-            inches *= org.firstinspires.ftc.teamcode.Constants.STRAFE_MOVEMENT_RATIO;
+            inches *= Constants.STRAFE_MOVEMENT_RATIO;
         }
 
         encoderDrive(robot, direction, speed,  inches,  inches, inches,  inches);
@@ -140,7 +201,7 @@ public class Utility {
     public static void encoderDrive(RobotHardware robot, Utility.Direction direction, double inches) {
 
         if (direction == Utility.Direction.LEFT || direction == Utility.Direction.RIGHT) {
-            inches *= org.firstinspires.ftc.teamcode.Constants.STRAFE_MOVEMENT_RATIO;
+            inches *= Constants.STRAFE_MOVEMENT_RATIO;
         }
 
         encoderDrive(robot, direction, Constants.AUTON_DRIVE_SPEED,  inches,  inches, inches,  inches);
