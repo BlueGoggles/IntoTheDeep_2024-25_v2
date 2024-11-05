@@ -95,6 +95,9 @@ public class Utility {
         robot.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
         robot.setModeForSlide(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        robot.setModeForSlide(DcMotorEx.RunMode.RUN_USING_ENCODER);
+
+        robot.setModeForTurn(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         robot.setModeForTurn(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
         // Initialize Gyro sensor

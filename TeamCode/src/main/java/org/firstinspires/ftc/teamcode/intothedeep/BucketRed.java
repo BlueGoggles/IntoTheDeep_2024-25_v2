@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.intothedeep;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous(name = "Bucket Red", group = "RedAuton")
 public class BucketRed extends LinearOpMode {
@@ -13,6 +14,11 @@ public class BucketRed extends LinearOpMode {
 
         Utility.initializeRobot(robot);
         waitForStart();
+
+//        robot.getBackIntakeServo().setPosition(0.0);
+//        robot.getFrontIntakeServo().setPosition(0.0);
+
+
 
         // Drive towards object
         moveToObject(robot);
@@ -27,9 +33,17 @@ public class BucketRed extends LinearOpMode {
 //        Utility.encoderDrive(robot, Utility.Direction.LEFT, 10);
 //        Utility.turnToPID(robot, 90);
 //        Utility.turnToPID(robot, -90);
+//
+//        sleep(5000);
+//        for (int i = 0; i < 90; i+=10)
 
-        Utility.slide(robot, Utility.Direction.FORWARD, 30, 0.5);
+//        robot.setZeroPowerBehaviorForSlide();
         sleep(5000);
-        Utility.turn(robot, Utility.Direction.FORWARD, 3, 0.5);
+
+        sleep(5000);
+//        Utility.turn(robot, Utility.Direction.FORWARD, 3, 0.5);
+        robot.setZeroPowerBehaviorForTurn();
+//        Utility.encoderDrive(robot, Utility.Direction.FORWARD, 10);
+
     }
 }

@@ -14,8 +14,12 @@ public interface Constants {
 
     String DEVICE_VIPER_SLIDE = "viperSlide";
     String DEVICE_LEAD_SCREW = "leadScrew";
-    String DEVICE_PAN_SERVO = "panServo";
-    String DEVICE_PAN_DOOR = "panDoor";
+    String DEVICE_RIGHT_SLIDE_SERVO = "rightSlideServo";
+    String DEVICE_LEFT_SLIDE_SERVO = "leftSlideServo";
+
+    String FRONT_INTAKE_SERVO = "frontIntakeServo";
+    String BACK_INTAKE_SERVO = "backIntakeServo";
+
     String DEVICE_LEAD_SCREW_SWITCH = "leadScrewSwitch";
     String DEVICE_DRONE_LAUNCHER = "droneLauncher";
     String DEVICE_IMU = "imu";
@@ -74,16 +78,22 @@ public interface Constants {
     double TELEOP_DEFAULT_SPEED = 0.5;
     double TELEOP_MODIFIED_SPEED = 1.0;
 
-    double PAN_DOOR_START_POSITION = 0.0;
-    double PAN_DOOR_STOP_POSITION = 0.5;
+    double INTAKE_SERVO_IN_POSITION = 1.0;
+    double INTAKE_SERVO_OUT_POSITION = 0.0;
+    double INTAKE_SERVO_STOP_POSITION = 0.5;
 
     int PAN_DOOR_RUN_TIME_PURPLE_PIXEL = 400; // MilliSeconds
     int PAN_DOOR_RUN_TIME_YELLOW_PIXEL = 1500; // MilliSeconds
     int PAN_DOOR_AUTON_WAIT = 700; // Milliseconds
     double PAN_TILT_ANGLE = 0.01;
     long PAN_TILT_TIME_MS = 10;
-    double PAN_HOME_POSITION = 1.0;
-    double PAN_DEPLOYED_POSITION = 0.63;
+
+    double SLIDE_SERVO_HOME_POSITION = 0.5;
+    double SLIDE_SERVO_PICKUP_POSITION = 0.98;
+    double SLIDE_SERVO_CARRY_POSITION = 0.8;
+    double SLIDE_SERVO_DELIVERY_POSITION = 0.6;
+    double LEFT_SLIDE_SERVO_DEPLOYED_POSITION = 0.63;
+    double RIGHT_SLIDE_SERVO_DEPLOYED_POSITION = 0.63;
 
     int INITIAL_WAIT_TIME_FOR_FRONT_STAGE = 7000; // MilliSeconds
 

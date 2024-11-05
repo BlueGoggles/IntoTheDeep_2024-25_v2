@@ -34,8 +34,12 @@ public class RobotHardware {
 
     //    private DcMotorEx viperSlide = null;
 //    private DcMotorEx leadScrew = null;
-    private Servo panServo = null;
-    private Servo panDoor = null;
+    private Servo rightSlideServo = null;
+    private Servo leftSlideServo = null;
+
+    private Servo frontIntakeServo = null;
+    private Servo backIntakeServo = null;
+
 //    private Servo leadScrewSwitch = null;
 //    private Servo droneLauncher = null;
 
@@ -75,24 +79,9 @@ public class RobotHardware {
         // Expansion hub motors
         leftSlide  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_LEFT_SLIDE);
         rightSlide = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_RIGHT_SLIDE);
+
         leftTurn  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_LEFT_TURN);
         rightTurn = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_RIGHT_TURN);
-
-//        viperSlide  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_VIPER_SLIDE);
-//        leadScrew = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_LEAD_SCREW);
-//        // Servos
-//        panServo = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_PAN_SERVO);
-//        panDoor  = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_PAN_DOOR);
-//        leadScrewSwitch = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_LEAD_SCREW_SWITCH);
-
-//        getPanServo().setDirection(Servo.Direction.FORWARD);
-//        getPanServo().setPosition(Constants.PAN_HOME_POSITION);
-//
-//        getPanDoor().setDirection(Servo.Direction.FORWARD);
-//        getPanDoor().setPosition(Constants.MID_SERVO);
-//
-//        getLeadScrewSwitch().setDirection(Servo.Direction.FORWARD);
-//        getLeadScrewSwitch().setPosition(0.1);
 
         getLeftFront().setDirection(DcMotorEx.Direction.REVERSE);
         getRightFront().setDirection(DcMotorEx.Direction.FORWARD);
@@ -102,18 +91,30 @@ public class RobotHardware {
         getLeftSlide().setDirection(DcMotorEx.Direction.FORWARD);
         getRightSlide().setDirection(DcMotorEx.Direction.REVERSE);
 
-        getLeftTurn().setDirection(DcMotorEx.Direction.FORWARD);
-        getRightTurn().setDirection(DcMotorEx.Direction.REVERSE);
+        getLeftTurn().setDirection(DcMotorEx.Direction.REVERSE);
+        getRightTurn().setDirection(DcMotorEx.Direction.FORWARD);
 
-//        this.getViperSlide().setDirection(DcMotorEx.Direction.REVERSE);
-//        this.getLeadScrew().setDirection(DcMotorEx.Direction.FORWARD);
-//
-//        this.getViperSlide().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        this.getLeadScrew().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//
-//        setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-//        this.getViperSlide().setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-//        this.getLeadScrew().setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        // Servos
+        leftSlideServo  = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_LEFT_SLIDE_SERVO);
+        rightSlideServo = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_RIGHT_SLIDE_SERVO);
+
+        frontIntakeServo = myOpMode.hardwareMap.get(Servo.class, Constants.FRONT_INTAKE_SERVO);
+        backIntakeServo  = myOpMode.hardwareMap.get(Servo.class, Constants.BACK_INTAKE_SERVO);
+
+        getLeftSlideServo().setDirection(Servo.Direction.REVERSE);
+        getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);
+
+        getRightSlideServo().setDirection(Servo.Direction.FORWARD);
+        getRightSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);
+
+        getFrontIntakeServo().setDirection(Servo.Direction.FORWARD);
+        getFrontIntakeServo().setPosition(Constants.MID_SERVO);
+
+        getBackIntakeServo().setDirection(Servo.Direction.FORWARD);
+        getBackIntakeServo().setPosition(Constants.MID_SERVO);
+
+
+        setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
         setMotorPowers(Constants.ZERO_POWER);
 
@@ -183,8 +184,6 @@ public class RobotHardware {
 
         int leftSlideTarget = getLeftSlide().getCurrentPosition();
         int rightSlideTarget= getRightSlide().getCurrentPosition();
-        myOpMode.telemetry.addData("leftSlideTarget: ", leftSlideTarget);
-        myOpMode.telemetry.addData("rightSlideTarget: ", rightSlideTarget);
 
         // Determine new target position, and pass to motor controller
         if (direction == Utility.Direction.FORWARD) {
@@ -195,9 +194,6 @@ public class RobotHardware {
             rightSlideTarget = rightSlideTarget - (int) (slideInches * COUNTS_PER_INCH);
         }
 
-        myOpMode.telemetry.addData("leftSlideTarget: ", leftSlideTarget);
-        myOpMode.telemetry.addData("rightSlideTarget: ", rightSlideTarget);
-        myOpMode.telemetry.update();
         // Set the Target Position
         getLeftSlide().setTargetPosition(leftSlideTarget);
         getRightSlide().setTargetPosition(rightSlideTarget);
@@ -274,8 +270,8 @@ public class RobotHardware {
 //        RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoFacingDirection, usbFacingDirection);
 
         // Expansion Hub IMU Parameters
-        RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection = RevHubOrientationOnRobot.LogoFacingDirection.RIGHT;
-        RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection = RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD;
+        RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
+        RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection = RevHubOrientationOnRobot.UsbFacingDirection.RIGHT;
         RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoFacingDirection, usbFacingDirection);
 
         IMU.Parameters parameters = new IMU.Parameters(orientationOnRobot);
@@ -359,27 +355,35 @@ public class RobotHardware {
     }
 
     public DcMotorEx getRightSlide() {
-        return rightSlide;
+        return this.rightSlide;
     }
 
     public DcMotorEx getLeftSlide() {
-        return leftSlide;
+        return this.leftSlide;
     }
 
     public DcMotorEx getLeftTurn() {
-        return leftTurn;
+        return this.leftTurn;
     }
 
     public DcMotorEx getRightTurn() {
-        return rightTurn;
+        return this.rightTurn;
     }
 
-    public Servo getPanServo() {
-        return this.panServo;
+    public Servo getRightSlideServo() {
+        return this.rightSlideServo;
     }
 
-    public Servo getPanDoor() {
-        return this.panDoor;
+    public Servo getLeftSlideServo() {
+        return this.leftSlideServo;
+    }
+
+    public Servo getFrontIntakeServo() {
+        return this.frontIntakeServo;
+    }
+
+    public Servo getBackIntakeServo() {
+        return this.backIntakeServo;
     }
 
     public IMU getImu() {
