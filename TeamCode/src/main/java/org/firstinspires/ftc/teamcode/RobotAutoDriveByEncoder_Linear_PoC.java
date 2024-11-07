@@ -1,15 +1,11 @@
-package org.firstinspires.ftc.teamcode.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.RobotHardware;
-import org.firstinspires.ftc.teamcode.Utility;
-
 @Autonomous(name="Robot: Auto Drive By Encoder PoC", group = "Samples")
-@Disabled
 public class RobotAutoDriveByEncoder_Linear_PoC extends LinearOpMode {
 
     RobotHardware robot = new RobotHardware(this);

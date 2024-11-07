@@ -34,14 +34,16 @@ public class RobotHardware {
 
     //    private DcMotorEx viperSlide = null;
 //    private DcMotorEx leadScrew = null;
-    private Servo rightSlideServo = null;
+//    private Servo rightSlideServo = null;
     private Servo leftSlideServo = null;
+    private Servo shoulderServo = null;
 
     private Servo frontIntakeServo = null;
     private Servo backIntakeServo = null;
+    private Servo intakePanServo = null;
 
-//    private Servo leadScrewSwitch = null;
-//    private Servo droneLauncher = null;
+    public static int SLIDE_LOWER_LIMIT = 0;
+    public static int SLIDE_UPPER_LIMIT = 0;
 
     private IMU imu = null;
 
@@ -78,34 +80,39 @@ public class RobotHardware {
         rightBack = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_BACK_RIGHT);
         // Expansion hub motors
         leftSlide  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_LEFT_SLIDE);
-        rightSlide = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_RIGHT_SLIDE);
+//        rightSlide = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_RIGHT_SLIDE);
 
-        leftTurn  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_LEFT_TURN);
-        rightTurn = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_RIGHT_TURN);
+//        leftTurn  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_LEFT_TURN);
+//        rightTurn = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_RIGHT_TURN);
 
         getLeftFront().setDirection(DcMotorEx.Direction.REVERSE);
         getRightFront().setDirection(DcMotorEx.Direction.FORWARD);
         getLeftBack().setDirection(DcMotorEx.Direction.REVERSE);
         getRightBack().setDirection(DcMotorEx.Direction.FORWARD);
 
-        getLeftSlide().setDirection(DcMotorEx.Direction.FORWARD);
-        getRightSlide().setDirection(DcMotorEx.Direction.REVERSE);
+        getLeftSlide().setDirection(DcMotorEx.Direction.REVERSE);
+//        getRightSlide().setDirection(DcMotorEx.Direction.REVERSE);
 
-        getLeftTurn().setDirection(DcMotorEx.Direction.REVERSE);
-        getRightTurn().setDirection(DcMotorEx.Direction.FORWARD);
+//        getLeftTurn().setDirection(DcMotorEx.Direction.REVERSE);
+//        getRightTurn().setDirection(DcMotorEx.Direction.FORWARD);
 
         // Servos
         leftSlideServo  = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_LEFT_SLIDE_SERVO);
-        rightSlideServo = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_RIGHT_SLIDE_SERVO);
+//        rightSlideServo = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_RIGHT_SLIDE_SERVO);
+        shoulderServo  = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_SHOULDER_SERVO);
 
         frontIntakeServo = myOpMode.hardwareMap.get(Servo.class, Constants.FRONT_INTAKE_SERVO);
         backIntakeServo  = myOpMode.hardwareMap.get(Servo.class, Constants.BACK_INTAKE_SERVO);
+        intakePanServo  = myOpMode.hardwareMap.get(Servo.class, Constants.INTAKE_PAN_SERVO);
 
         getLeftSlideServo().setDirection(Servo.Direction.REVERSE);
         getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);
 
-        getRightSlideServo().setDirection(Servo.Direction.FORWARD);
-        getRightSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);
+//        getRightSlideServo().setDirection(Servo.Direction.FORWARD);
+//        getRightSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);
+
+        getShoulderServo().setDirection(Servo.Direction.REVERSE);
+        getShoulderServo().setPosition(Constants.SHOULDER_SERVO_HOME_POSITION);
 
         getFrontIntakeServo().setDirection(Servo.Direction.FORWARD);
         getFrontIntakeServo().setPosition(Constants.MID_SERVO);
@@ -113,16 +120,21 @@ public class RobotHardware {
         getBackIntakeServo().setDirection(Servo.Direction.FORWARD);
         getBackIntakeServo().setPosition(Constants.MID_SERVO);
 
+        getIntakePanServo().setDirection(Servo.Direction.FORWARD);
+        getIntakePanServo().setPosition(Constants.INTAKE_PAN_SERVO_HOME_POSITION);
 
         setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
         setMotorPowers(Constants.ZERO_POWER);
 
-        this.getLeftSlide().setPower(Constants.ZERO_POWER);
-        this.getRightSlide().setPower(Constants.ZERO_POWER);
+        getLeftSlide().setPower(Constants.ZERO_POWER);
+//        this.getRightSlide().setPower(Constants.ZERO_POWER);
 
-        this.getLeftTurn().setPower(Constants.ZERO_POWER);
-        this.getRightTurn().setPower(Constants.ZERO_POWER);
+//        this.getLeftTurn().setPower(Constants.ZERO_POWER);
+//        this.getRightTurn().setPower(Constants.ZERO_POWER);
+
+        SLIDE_LOWER_LIMIT = getLeftSlide().getCurrentPosition();
+        SLIDE_UPPER_LIMIT = SLIDE_LOWER_LIMIT + Constants.SLIDE_TIX_COUNT;
     }
 
     public void setMotorPowers(double leftFront, double rightFront, double leftBack, double rightBack) {
@@ -134,13 +146,13 @@ public class RobotHardware {
 
     public void setMotorPowersForSlide(double speed) {
         this.getLeftSlide().setPower(speed);
-        this.getRightSlide().setPower(speed);
+//        this.getRightSlide().setPower(speed);
     }
 
-    public void setMotorPowersForTurn(double speed) {
-        this.getLeftTurn().setPower(speed);
-        this.getRightTurn().setPower(speed);
-    }
+//    public void setMotorPowersForTurn(double speed) {
+//        this.getLeftTurn().setPower(speed);
+//        this.getRightTurn().setPower(speed);
+//    }
 
     public void setMotorPowers(double allWhealPower) {
         setMotorPowers(allWhealPower, allWhealPower, allWhealPower, allWhealPower);
@@ -155,13 +167,13 @@ public class RobotHardware {
 
     public void setModeForSlide(DcMotorEx.RunMode mode) {
         getLeftSlide().setMode(mode);
-        getRightSlide().setMode(mode);
+//        getRightSlide().setMode(mode);
     }
 
-    public void setModeForTurn(DcMotorEx.RunMode mode) {
-        getLeftTurn().setMode(mode);
-        getRightTurn().setMode(mode);
-    }
+//    public void setModeForTurn(DcMotorEx.RunMode mode) {
+//        getLeftTurn().setMode(mode);
+//        getRightTurn().setMode(mode);
+//    }
 
     public void setZeroPowerBehavior() {
         getLeftFront().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -172,51 +184,42 @@ public class RobotHardware {
 
     public void setZeroPowerBehaviorForSlide() {
         getLeftSlide().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        getRightSlide().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+//        getRightSlide().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }
 
-    public void setZeroPowerBehaviorForTurn() {
-        getLeftTurn().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        getRightTurn().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-    }
+//    public void setZeroPowerBehaviorForTurn() {
+//        getLeftTurn().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+//        getRightTurn().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+//    }
 
-    public void slide(Utility.Direction direction, double slideInches) {
-
-        int leftSlideTarget = getLeftSlide().getCurrentPosition();
-        int rightSlideTarget= getRightSlide().getCurrentPosition();
+    public void setTargetPositionForSlide(Utility.Direction direction) {
 
         // Determine new target position, and pass to motor controller
         if (direction == Utility.Direction.FORWARD) {
-            leftSlideTarget = leftSlideTarget + (int) (slideInches * COUNTS_PER_INCH);
-            rightSlideTarget = rightSlideTarget + (int) (slideInches * COUNTS_PER_INCH);
+            getLeftSlide().setTargetPosition(SLIDE_UPPER_LIMIT);
         } else if (direction == Utility.Direction.BACKWARD) {
-            leftSlideTarget = leftSlideTarget - (int) (slideInches * COUNTS_PER_INCH);
-            rightSlideTarget = rightSlideTarget - (int) (slideInches * COUNTS_PER_INCH);
+            getLeftSlide().setTargetPosition(SLIDE_LOWER_LIMIT);
         }
-
-        // Set the Target Position
-        getLeftSlide().setTargetPosition(leftSlideTarget);
-        getRightSlide().setTargetPosition(rightSlideTarget);
     }
 
-    public void turn(Utility.Direction direction, double turnInches) {
-
-        int leftTurnTarget = getLeftTurn().getCurrentPosition();
-        int rightTurnTarget= getRightTurn().getCurrentPosition();
-
-        // Determine new target position, and pass to motor controller
-        if (direction == Utility.Direction.FORWARD) {
-            leftTurnTarget = leftTurnTarget + (int) (turnInches * COUNTS_PER_INCH);
-            rightTurnTarget = rightTurnTarget + (int) (turnInches * COUNTS_PER_INCH);
-        } else if (direction == Utility.Direction.BACKWARD) {
-            leftTurnTarget = leftTurnTarget - (int) (turnInches * COUNTS_PER_INCH);
-            rightTurnTarget = rightTurnTarget - (int) (turnInches * COUNTS_PER_INCH);
-        }
-
-        // Set the Target Position
-        getLeftTurn().setTargetPosition(leftTurnTarget);
-        getRightTurn().setTargetPosition(rightTurnTarget);
-    }
+//    public void turn(Utility.Direction direction, double turnInches) {
+//
+//        int leftTurnTarget = getLeftTurn().getCurrentPosition();
+//        int rightTurnTarget= getRightTurn().getCurrentPosition();
+//
+//        // Determine new target position, and pass to motor controller
+//        if (direction == Utility.Direction.FORWARD) {
+//            leftTurnTarget = leftTurnTarget + (int) (turnInches * COUNTS_PER_INCH);
+//            rightTurnTarget = rightTurnTarget + (int) (turnInches * COUNTS_PER_INCH);
+//        } else if (direction == Utility.Direction.BACKWARD) {
+//            leftTurnTarget = leftTurnTarget - (int) (turnInches * COUNTS_PER_INCH);
+//            rightTurnTarget = rightTurnTarget - (int) (turnInches * COUNTS_PER_INCH);
+//        }
+//
+//        // Set the Target Position
+//        getLeftTurn().setTargetPosition(leftTurnTarget);
+//        getRightTurn().setTargetPosition(rightTurnTarget);
+//    }
 
     public void setTargetPosition(Utility.Direction direction, double leftFrontInches, double rightFrontInches, double leftBackInches, double rightBackInches) {
 
@@ -370,8 +373,12 @@ public class RobotHardware {
         return this.rightTurn;
     }
 
-    public Servo getRightSlideServo() {
-        return this.rightSlideServo;
+//    public Servo getRightSlideServo() {
+//        return this.rightSlideServo;
+//    }
+
+    public Servo getShoulderServo() {
+        return this.shoulderServo;
     }
 
     public Servo getLeftSlideServo() {
@@ -384,6 +391,10 @@ public class RobotHardware {
 
     public Servo getBackIntakeServo() {
         return this.backIntakeServo;
+    }
+
+    public Servo getIntakePanServo() {
+        return intakePanServo;
     }
 
     public IMU getImu() {

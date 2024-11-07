@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.intothedeep;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -151,10 +152,11 @@ public class MainTeleOp extends LinearOpMode {
 //
 //                Joystick_X = (Math.sin(Theta_Command / 180 * Math.PI) * Speed);
 //                Joystick_Y = (Math.cos(Theta_Command / 180 * Math.PI) * Speed);
-                FL_Power = 0.5 * (-Gain_X * Joystick_X - (Gain_Y * Joystick_Y + Gain_Z * Joystick_Z));
-                FR_Power = 0.5 * (-Gain_X * Joystick_X + (Gain_Y * Joystick_Y - Gain_Z * Joystick_Z));
-                BL_Power = 0.5 * (Gain_X * Joystick_X - (Gain_Y * Joystick_Y + Gain_Z * Joystick_Z));
-                BR_Power = 0.5 * (Gain_X * Joystick_X + (Gain_Y * Joystick_Y - Gain_Z * Joystick_Z));
+                double wheelMotorSpeed = 1.0;
+                FL_Power = wheelMotorSpeed * (-Gain_X * Joystick_X - (Gain_Y * Joystick_Y + Gain_Z * Joystick_Z));
+                FR_Power = wheelMotorSpeed * (-Gain_X * Joystick_X + (Gain_Y * Joystick_Y - Gain_Z * Joystick_Z));
+                BL_Power = wheelMotorSpeed * (Gain_X * Joystick_X - (Gain_Y * Joystick_Y + Gain_Z * Joystick_Z));
+                BR_Power = wheelMotorSpeed * (Gain_X * Joystick_X + (Gain_Y * Joystick_Y - Gain_Z * Joystick_Z));
 //                if (Math.abs(FR_Power) > Math.abs(FL_Power)) {
 //                    Max = Math.abs(FR_Power);
 //                } else {
@@ -185,19 +187,41 @@ public class MainTeleOp extends LinearOpMode {
 
                 // NOTE: This program is single threaded right now. So we can't do multiple operations at once.
 
+                if (gamepad1.a) {
+                    robot.getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);
+                }
+
+                if (gamepad1.b) {
+                    robot.getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_DELIVERY_POSITION);
+                }
+
+                if (gamepad1.x) {
+                    robot.getShoulderServo().setPosition(0.5);
+                    sleep(200);
+                    Utility.slide(robot, Utility.Direction.FORWARD, 1.0);
+                }
+
+                if (gamepad1.y) {
+                    robot.getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);
+                    Utility.slide(robot, Utility.Direction.BACKWARD, 1.0);
+                    robot.getIntakePanServo().setPosition(0.0);
+                }
+
+//                if (gamepad2.y) {
+//                    robot.getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_DELIVERY_POSITION);
+//                    robot.getRightSlideServo().setPosition(Constants.SLIDE_SERVO_DELIVERY_POSITION);
+//                }
+
                 if (gamepad2.a) {
-                    robot.getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_PICKUP_POSITION);
-                    robot.getRightSlideServo().setPosition(Constants.SLIDE_SERVO_PICKUP_POSITION);
+                    robot.getIntakePanServo().setPosition(Constants.INTAKE_PAN_SERVO_PICKUP_POSITION);
                 }
 
                 if (gamepad2.b) {
-                    robot.getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_CARRY_POSITION);
-                    robot.getRightSlideServo().setPosition(Constants.SLIDE_SERVO_CARRY_POSITION);
+                    robot.getIntakePanServo().setPosition(Constants.INTAKE_PAN_SERVO_CARRY_POSITION);
                 }
 
                 if (gamepad2.y) {
-                    robot.getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_DELIVERY_POSITION);
-                    robot.getRightSlideServo().setPosition(Constants.SLIDE_SERVO_DELIVERY_POSITION);
+                    robot.getIntakePanServo().setPosition(Constants.INTAKE_PAN_SERVO_DELIVERY_POSITION);
                 }
 
                 if (gamepad2.right_bumper) {
@@ -216,39 +240,58 @@ public class MainTeleOp extends LinearOpMode {
                     robot.getBackIntakeServo().setPosition(Constants.INTAKE_SERVO_STOP_POSITION);
                 }
 
-                if( gamepad2.left_trigger > 0.5 ) {
-                    Utility.slide(robot, Utility.Direction.BACKWARD, 50, 1.0);
+                if (gamepad2.dpad_down) {
+//                    robot.getIntakePanServo().setPosition(Constants.INTAKE_PAN_SERVO_CARRY_POSITION);
+                    robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_PICKUP_POSITION);
                 }
 
-                if( gamepad2.right_trigger > 0.5 ) {
-                    Utility.slide(robot, Utility.Direction.FORWARD, 50,1.0);
+                if (gamepad2.dpad_right) {
+                    robot.getIntakePanServo().setPosition(Constants.INTAKE_PAN_SERVO_CARRY_POSITION);
+                    robot.getShoulderServo().setPosition(0.45);
+                    robot.getIntakePanServo().setPosition(Constants.INTAKE_PAN_SERVO_PICKUP_POSITION);
+                    robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_DELIVERY_POSITION);
                 }
 
-                if( gamepad2.start) {
-                    Utility.slide(robot, Utility.Direction.BACKWARD, 100, 1.0);
+
+                if (gamepad2.dpad_up) {
+                    robot.getShoulderServo().setPosition(0.5);
                 }
 
-                if( gamepad2.back) {
-                    Utility.slide(robot, Utility.Direction.FORWARD, 100,1.0);
-                }
-
-                if ( gamepad1.right_bumper ) {
-                    Utility.turn(robot, Utility.Direction.FORWARD, 8,0.1);
-                }
-
-                if ( gamepad1.left_bumper) {
-                    Utility.turn(robot, Utility.Direction.BACKWARD, 8, 0.1);
-                }
+//                if( gamepad2.left_trigger > 0.5 ) {
+//                    Utility.slide(robot, Utility.Direction.BACKWARD, 50, 1.0);
+//                }
+//
+//                if( gamepad2.right_trigger > 0.5 ) {
+//                    Utility.slide(robot, Utility.Direction.FORWARD, 50,1.0);
+//                }
+//
+//                if( gamepad2.start) {
+//                    Utility.slide(robot, Utility.Direction.BACKWARD, 100, 1.0);
+//                }
+//
+//                if( gamepad2.back) {
+//                    Utility.slide(robot, Utility.Direction.FORWARD, 100,1.0);
+//                }
+//
+//                if ( gamepad1.right_bumper ) {
+//                    Utility.turn(robot, Utility.Direction.FORWARD, 8,0.1);
+//                }
+//
+//                if ( gamepad1.left_bumper) {
+//                    Utility.turn(robot, Utility.Direction.BACKWARD, 8, 0.1);
+//                }
 
                 // Press this button to reset the yaw during Teleop. Only allow this to happen if we are in manual mode.
                 if (gamepad1.y && enableManualOverride) {
                     robot.getImu().resetYaw();
                 }
 
-                telemetry.addData("Front Left Pow", robot.getLeftFront().getPower());
-                telemetry.addData("Front Right Pow", robot.getRightFront().getPower());
-                telemetry.addData("Back Left Pow", robot.getLeftBack().getPower());
-                telemetry.addData("Back Right Pow", robot.getRightBack().getPower());
+                telemetry.addData("Front Left Power: ", robot.getLeftFront().getPower());
+                telemetry.addData("Front Right Power: ", robot.getRightFront().getPower());
+                telemetry.addData("Back Left Power: ", robot.getLeftBack().getPower());
+                telemetry.addData("Back Right Power: ", robot.getRightBack().getPower());
+
+                telemetry.addData("Slide Motor position: ", robot.getLeftSlide().getCurrentPosition());
 
                 telemetry.update();
             }
