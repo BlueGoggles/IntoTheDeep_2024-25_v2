@@ -90,7 +90,7 @@ public class RobotHardware {
         getLeftBack().setDirection(DcMotorEx.Direction.REVERSE);
         getRightBack().setDirection(DcMotorEx.Direction.FORWARD);
 
-        getLeftSlide().setDirection(DcMotorEx.Direction.REVERSE);
+        getLeftSlide().setDirection(DcMotorEx.Direction.FORWARD);
 //        getRightSlide().setDirection(DcMotorEx.Direction.REVERSE);
 
 //        getLeftTurn().setDirection(DcMotorEx.Direction.REVERSE);

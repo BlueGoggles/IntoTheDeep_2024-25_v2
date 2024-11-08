@@ -130,11 +130,12 @@ public class Utility {
             }
 
             // Stop all motion;
-            robot.setMotorPowersForSlide(Constants.ZERO_POWER);
+//            robot.setMotorPowersForSlide(Constants.ZERO_POWER);
             robot.setZeroPowerBehaviorForSlide();
 
+
             // Turn off RUN_TO_POSITION
-            robot.setModeForSlide(DcMotorEx.RunMode.RUN_USING_ENCODER);
+//            robot.setModeForSlide(DcMotorEx.RunMode.RUN_USING_ENCODER);
         }
     }
 

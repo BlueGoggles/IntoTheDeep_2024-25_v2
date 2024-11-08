@@ -152,7 +152,7 @@ public class MainTeleOp extends LinearOpMode {
 //
 //                Joystick_X = (Math.sin(Theta_Command / 180 * Math.PI) * Speed);
 //                Joystick_Y = (Math.cos(Theta_Command / 180 * Math.PI) * Speed);
-                double wheelMotorSpeed = 1.0;
+                double wheelMotorSpeed = 0.5;
                 FL_Power = wheelMotorSpeed * (-Gain_X * Joystick_X - (Gain_Y * Joystick_Y + Gain_Z * Joystick_Z));
                 FR_Power = wheelMotorSpeed * (-Gain_X * Joystick_X + (Gain_Y * Joystick_Y - Gain_Z * Joystick_Z));
                 BL_Power = wheelMotorSpeed * (Gain_X * Joystick_X - (Gain_Y * Joystick_Y + Gain_Z * Joystick_Z));
@@ -224,21 +224,16 @@ public class MainTeleOp extends LinearOpMode {
                     robot.getIntakePanServo().setPosition(Constants.INTAKE_PAN_SERVO_DELIVERY_POSITION);
                 }
 
-                if (gamepad2.right_bumper) {
-                    robot.getFrontIntakeServo().setPosition(Constants.INTAKE_SERVO_IN_POSITION);
-                    robot.getBackIntakeServo().setPosition(Constants.INTAKE_SERVO_IN_POSITION);
-                } else {
-                    robot.getFrontIntakeServo().setPosition(Constants.INTAKE_SERVO_STOP_POSITION);
-                    robot.getBackIntakeServo().setPosition(Constants.INTAKE_SERVO_STOP_POSITION);
-                }
+                double intakeServoPosition = 0.5;
 
                 if (gamepad2.left_bumper) {
-                    robot.getFrontIntakeServo().setPosition(Constants.INTAKE_SERVO_OUT_POSITION);
-                    robot.getBackIntakeServo().setPosition(Constants.INTAKE_SERVO_OUT_POSITION);
-                } else {
-                    robot.getFrontIntakeServo().setPosition(Constants.INTAKE_SERVO_STOP_POSITION);
-                    robot.getBackIntakeServo().setPosition(Constants.INTAKE_SERVO_STOP_POSITION);
+                    intakeServoPosition = Constants.INTAKE_SERVO_OUT_POSITION;
+                } else if (gamepad2.right_bumper) {
+                    intakeServoPosition = Constants.INTAKE_SERVO_IN_POSITION;
                 }
+
+                robot.getFrontIntakeServo().setPosition(intakeServoPosition);
+                robot.getBackIntakeServo().setPosition(intakeServoPosition);
 
                 if (gamepad2.dpad_down) {
 //                    robot.getIntakePanServo().setPosition(Constants.INTAKE_PAN_SERVO_CARRY_POSITION);
@@ -292,6 +287,8 @@ public class MainTeleOp extends LinearOpMode {
                 telemetry.addData("Back Right Power: ", robot.getRightBack().getPower());
 
                 telemetry.addData("Slide Motor position: ", robot.getLeftSlide().getCurrentPosition());
+                telemetry.addData("Front Intake Servo: ", robot.getFrontIntakeServo().getPosition());
+                telemetry.addData("Back Intake Servo: ", robot.getBackIntakeServo().getPosition());
 
                 telemetry.update();
             }
