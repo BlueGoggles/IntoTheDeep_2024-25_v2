@@ -197,13 +197,13 @@ public class MainTeleOp extends LinearOpMode {
 
                 if (gamepad1.x) {
                     robot.getShoulderServo().setPosition(0.5);
-                    sleep(200);
-                    Utility.slide(robot, Utility.Direction.FORWARD, 1.0);
+                    sleep(350);
+                    Utility.slide(robot, Utility.Direction.FORWARD, Constants.MAX_POWER);
                 }
 
                 if (gamepad1.y) {
                     robot.getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);
-                    Utility.slide(robot, Utility.Direction.BACKWARD, 1.0);
+                    Utility.slide(robot, Utility.Direction.BACKWARD, Constants.MAX_POWER);
                     robot.getIntakePanServo().setPosition(0.0);
                 }
 
@@ -287,8 +287,12 @@ public class MainTeleOp extends LinearOpMode {
                 telemetry.addData("Back Right Power: ", robot.getRightBack().getPower());
 
                 telemetry.addData("Slide Motor position: ", robot.getLeftSlide().getCurrentPosition());
+
                 telemetry.addData("Front Intake Servo: ", robot.getFrontIntakeServo().getPosition());
                 telemetry.addData("Back Intake Servo: ", robot.getBackIntakeServo().getPosition());
+                telemetry.addData("Intake Pan Servo: ", robot.getIntakePanServo().getPosition());
+                telemetry.addData("Shoulder Servo: ", robot.getShoulderServo().getPosition());
+                telemetry.addData("Slide Servo: ", robot.getLeftSlideServo().getPosition());
 
                 telemetry.update();
             }

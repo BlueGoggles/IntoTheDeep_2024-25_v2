@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 @Autonomous(name="Robot: Auto Drive By Encoder PoC", group = "Samples")
+@Disabled
 public class RobotAutoDriveByEncoder_Linear_PoC extends LinearOpMode {
 
     RobotHardware robot = new RobotHardware(this);

@@ -122,9 +122,11 @@ public class Utility {
             // Start the motion.
             robot.setMotorPowersForSlide(Math.abs(speed));
 
+            ElapsedTime slideTime = new ElapsedTime();
+            slideTime.reset();
+
             while (robot.getMyOpMode().opModeIsActive() &&
-                        robot.getLeftSlide().isBusy()
-//                            && robot.getRightSlide().isBusy()
+                    robot.getLeftSlide().isBusy() && slideTime.milliseconds() < 3000
                         ) {
                 // Engage the control
             }
