@@ -31,6 +31,7 @@ public class RobotHardware {
     private DcMotorEx rightSlide = null;
     private DcMotorEx leftTurn = null;
     private DcMotorEx rightTurn = null;
+    private DcMotorEx intakePanMotor = null;
 
     //    private DcMotorEx viperSlide = null;
 //    private DcMotorEx leadScrew = null;
@@ -44,6 +45,8 @@ public class RobotHardware {
 
     public static int SLIDE_LOWER_LIMIT = 0;
     public static int SLIDE_UPPER_LIMIT = 0;
+
+    public static int INTAKE_PAN_MOTOR_LOWER_LIMIT = 0;
 
     private IMU imu = null;
 
@@ -80,8 +83,7 @@ public class RobotHardware {
         rightBack = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_BACK_RIGHT);
         // Expansion hub motors
         leftSlide  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_LEFT_SLIDE);
-//        rightSlide = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_RIGHT_SLIDE);
-
+        intakePanMotor  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.INTAKE_PAN_MOTOR);
 //        leftTurn  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_LEFT_TURN);
 //        rightTurn = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_RIGHT_TURN);
 
@@ -91,6 +93,8 @@ public class RobotHardware {
         getRightBack().setDirection(DcMotorEx.Direction.FORWARD);
 
         getLeftSlide().setDirection(DcMotorEx.Direction.FORWARD);
+
+        getIntakePanMotor().setDirection(DcMotorEx.Direction.FORWARD);
 //        getRightSlide().setDirection(DcMotorEx.Direction.REVERSE);
 
 //        getLeftTurn().setDirection(DcMotorEx.Direction.REVERSE);
@@ -135,6 +139,8 @@ public class RobotHardware {
 
         SLIDE_LOWER_LIMIT = getLeftSlide().getCurrentPosition();
         SLIDE_UPPER_LIMIT = SLIDE_LOWER_LIMIT + Constants.SLIDE_TIX_COUNT;
+
+        INTAKE_PAN_MOTOR_LOWER_LIMIT = getIntakePanMotor().getCurrentPosition();
     }
 
     public void setMotorPowers(double leftFront, double rightFront, double leftBack, double rightBack) {
@@ -147,6 +153,10 @@ public class RobotHardware {
     public void setMotorPowersForSlide(double speed) {
         this.getLeftSlide().setPower(speed);
 //        this.getRightSlide().setPower(speed);
+    }
+
+    public void setMotorPowersForIntakePanMotor(double speed) {
+        this.getIntakePanMotor().setPower(speed);
     }
 
 //    public void setMotorPowersForTurn(double speed) {
@@ -170,6 +180,10 @@ public class RobotHardware {
 //        getRightSlide().setMode(mode);
     }
 
+    public void setModeForIntakePanMotor(DcMotorEx.RunMode mode) {
+        getIntakePanMotor().setMode(mode);
+    }
+
 //    public void setModeForTurn(DcMotorEx.RunMode mode) {
 //        getLeftTurn().setMode(mode);
 //        getRightTurn().setMode(mode);
@@ -187,6 +201,10 @@ public class RobotHardware {
 //        getRightSlide().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }
 
+    public void setZeroPowerBehaviorForIntakePanMotor() {
+        getIntakePanMotor().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+    }
+
 //    public void setZeroPowerBehaviorForTurn() {
 //        getLeftTurn().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 //        getRightTurn().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -199,6 +217,15 @@ public class RobotHardware {
             getLeftSlide().setTargetPosition(SLIDE_UPPER_LIMIT);
         } else if (direction == Utility.Direction.BACKWARD) {
             getLeftSlide().setTargetPosition(SLIDE_LOWER_LIMIT);
+        }
+    }
+
+    public void setTargetPositionForIntakePanMotor(int intakePanMotorTixCount, boolean manualMode) {
+
+        if (manualMode) {
+            getIntakePanMotor().setTargetPosition(getIntakePanMotor().getCurrentPosition() + intakePanMotorTixCount);
+        } else {
+            getIntakePanMotor().setTargetPosition(INTAKE_PAN_MOTOR_LOWER_LIMIT + intakePanMotorTixCount);
         }
     }
 
@@ -376,6 +403,11 @@ public class RobotHardware {
 //    public Servo getRightSlideServo() {
 //        return this.rightSlideServo;
 //    }
+
+
+    public DcMotorEx getIntakePanMotor() {
+        return intakePanMotor;
+    }
 
     public Servo getShoulderServo() {
         return this.shoulderServo;

@@ -9,6 +9,8 @@ public interface Constants {
     String DEVICE_LEFT_SLIDE = "leftSlide";
     String DEVICE_RIGHT_SLIDE = "rightSlide";
 
+    String INTAKE_PAN_MOTOR = "intakePanMotor";
+
     String DEVICE_RIGHT_TURN = "rightTurn";
     String DEVICE_LEFT_TURN = "leftTurn";
 
@@ -103,6 +105,11 @@ public interface Constants {
     double INTAKE_PAN_SERVO_CARRY_POSITION = 0.5;
     double INTAKE_PAN_SERVO_PICKUP_POSITION = 0.68;
     double INTAKE_PAN_SERVO_DELIVERY_POSITION = 0.3;
+
+    int INTAKE_PAN_MOTOR_HOME_POSITION = 0;
+    int INTAKE_PAN_MOTOR_CARRY_POSITION = 1400;
+    int INTAKE_PAN_MOTOR_PICKUP_POSITION = 2050;
+//    int INTAKE_PAN_MOTOR_DELIVERY_POSITION = 0.3;
 
     double LEFT_SLIDE_SERVO_DEPLOYED_POSITION = 0.63;
     double RIGHT_SLIDE_SERVO_DEPLOYED_POSITION = 0.63;

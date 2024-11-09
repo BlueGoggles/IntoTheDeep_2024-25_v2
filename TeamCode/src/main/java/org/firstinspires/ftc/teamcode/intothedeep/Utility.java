@@ -141,6 +141,33 @@ public class Utility {
         }
     }
 
+    public static void turnIntakePan(RobotHardware robot, int intakePanMotorTixCount) {
+        Utility.turnIntakePan(robot, intakePanMotorTixCount, false);
+    }
+
+    public static void turnIntakePan(RobotHardware robot, int intakePanMotorTixCount, boolean manualMode) {
+
+        // Ensure that the OpMode is still active
+        if (robot.getMyOpMode().opModeIsActive()) {
+
+            // Set Target Position
+            robot.setTargetPositionForIntakePanMotor(intakePanMotorTixCount, manualMode);
+
+
+            // Turn On RUN_TO_POSITION
+            robot.setModeForIntakePanMotor(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+            // Start the motion.
+            robot.setMotorPowersForIntakePanMotor(0.6);
+
+            while (robot.getMyOpMode().opModeIsActive() && robot.getIntakePanMotor().isBusy()) {
+                // Engage the control
+            }
+
+            robot.setZeroPowerBehaviorForIntakePanMotor();
+        }
+    }
+
 //    public static void turn(RobotHardware robot, Utility.Direction direction, double inches, double speed) {
 //
 //        // Ensure that the OpMode is still active
