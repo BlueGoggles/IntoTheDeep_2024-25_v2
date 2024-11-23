@@ -97,8 +97,8 @@ public class Utility {
         robot.setModeForSlide(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         robot.setModeForSlide(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
-//        robot.setModeForTurn(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-//        robot.setModeForTurn(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        robot.setModeForSpecimenIntakeMotor(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        robot.setModeForSpecimenIntakeMotor(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
         // Initialize Gyro sensor
         robot.initializeIMU();
@@ -121,19 +121,17 @@ public class Utility {
 
             // Start the motion.
             robot.setMotorPowersForSlide(Math.abs(speed));
+//
+//            ElapsedTime slideTime = new ElapsedTime();
+//            slideTime.reset();
 
-            ElapsedTime slideTime = new ElapsedTime();
-            slideTime.reset();
-
-            while (robot.getMyOpMode().opModeIsActive() &&
-                    robot.getLeftSlide().isBusy() && slideTime.milliseconds() < 3000
-                        ) {
+            while (robot.getMyOpMode().opModeIsActive() && robot.getLeftSlide().isBusy() && robot.getRightSlide().isBusy()) {
                 // Engage the control
             }
 
             // Stop all motion;
 //            robot.setMotorPowersForSlide(Constants.ZERO_POWER);
-            robot.setZeroPowerBehaviorForSlide();
+//            robot.setZeroPowerBehaviorForSlide();
 
 
             // Turn off RUN_TO_POSITION
@@ -141,32 +139,64 @@ public class Utility {
         }
     }
 
-    public static void turnIntakePan(RobotHardware robot, int intakePanMotorTixCount) {
-        Utility.turnIntakePan(robot, intakePanMotorTixCount, false);
-    }
-
-    public static void turnIntakePan(RobotHardware robot, int intakePanMotorTixCount, boolean manualMode) {
+    public static void slideSpecimenIntake(RobotHardware robot, Utility.Direction direction, double speed) {
 
         // Ensure that the OpMode is still active
         if (robot.getMyOpMode().opModeIsActive()) {
 
             // Set Target Position
-            robot.setTargetPositionForIntakePanMotor(intakePanMotorTixCount, manualMode);
+            robot.setTargetPositionForSpecimenIntakeMotor(direction);
 
 
             // Turn On RUN_TO_POSITION
-            robot.setModeForIntakePanMotor(DcMotorEx.RunMode.RUN_TO_POSITION);
+            robot.setModeForSpecimenIntakeMotor(DcMotorEx.RunMode.RUN_TO_POSITION);
 
             // Start the motion.
-            robot.setMotorPowersForIntakePanMotor(0.6);
+            robot.setMotorPowersForSpecimenIntakeMotor(Math.abs(speed));
+//
+//            ElapsedTime slideTime = new ElapsedTime();
+//            slideTime.reset();
 
-            while (robot.getMyOpMode().opModeIsActive() && robot.getIntakePanMotor().isBusy()) {
+            while (robot.getMyOpMode().opModeIsActive() && robot.getSpecimenIntakeMotor().isBusy()) {
                 // Engage the control
             }
 
-            robot.setZeroPowerBehaviorForIntakePanMotor();
+            // Stop all motion;
+//            robot.setMotorPowersForSlide(Constants.ZERO_POWER);
+            robot.setZeroPowerBehaviorForSpecimenIntakeMotor();
+
+
+            // Turn off RUN_TO_POSITION
+//            robot.setModeForSpecimenIntakeMotor(DcMotorEx.RunMode.RUN_USING_ENCODER);
         }
     }
+
+//    public static void turnIntakePan(RobotHardware robot, int intakePanMotorTixCount) {
+//        Utility.turnIntakePan(robot, intakePanMotorTixCount, false);
+//    }
+
+//    public static void turnIntakePan(RobotHardware robot, int intakePanMotorTixCount, boolean manualMode) {
+//
+//        // Ensure that the OpMode is still active
+//        if (robot.getMyOpMode().opModeIsActive()) {
+//
+//            // Set Target Position
+//            robot.setTargetPositionForIntakePanMotor(intakePanMotorTixCount, manualMode);
+//
+//
+//            // Turn On RUN_TO_POSITION
+//            robot.setModeForIntakePanMotor(DcMotorEx.RunMode.RUN_TO_POSITION);
+//
+//            // Start the motion.
+//            robot.setMotorPowersForIntakePanMotor(0.6);
+//
+//            while (robot.getMyOpMode().opModeIsActive() && robot.getIntakePanMotor().isBusy()) {
+//                // Engage the control
+//            }
+//
+//            robot.setZeroPowerBehaviorForIntakePanMotor();
+//        }
+//    }
 
 //    public static void turn(RobotHardware robot, Utility.Direction direction, double inches, double speed) {
 //

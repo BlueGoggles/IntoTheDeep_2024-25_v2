@@ -29,24 +29,32 @@ public class RobotHardware {
     private DcMotorEx rightBack = null;
     private DcMotorEx leftSlide = null;
     private DcMotorEx rightSlide = null;
-    private DcMotorEx leftTurn = null;
-    private DcMotorEx rightTurn = null;
-    private DcMotorEx intakePanMotor = null;
+    private DcMotorEx specimenIntakeMotor = null;
 
     //    private DcMotorEx viperSlide = null;
 //    private DcMotorEx leadScrew = null;
 //    private Servo rightSlideServo = null;
     private Servo leftSlideServo = null;
     private Servo shoulderServo = null;
+    private Servo elbowServo = null;
+    private Servo wristServo = null;
+    private Servo fingerServo = null;
 
     private Servo frontIntakeServo = null;
     private Servo backIntakeServo = null;
     private Servo intakePanServo = null;
 
-    public static int SLIDE_LOWER_LIMIT = 0;
-    public static int SLIDE_UPPER_LIMIT = 0;
+    private Servo specimenIntakeServo = null;
+    private Servo outtakePanServo = null;
 
-    public static int INTAKE_PAN_MOTOR_LOWER_LIMIT = 0;
+    public static int LEFT_SLIDE_LOWER_LIMIT = 0;
+    public static int LEFT_SLIDE_UPPER_LIMIT = 0;
+
+    public static int RIGHT_SLIDE_LOWER_LIMIT = 0;
+    public static int RIGHT_SLIDE_UPPER_LIMIT = 0;
+
+    public static int SPECIMEN_INTAKE_MOTOR_SLIDE_LOWER_LIMIT = 0;
+    public static int SPECIMEN_INTAKE_MOTOR_SLIDE_UPPER_LIMIT = 0;
 
     private IMU imu = null;
 
@@ -83,34 +91,39 @@ public class RobotHardware {
         rightBack = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_BACK_RIGHT);
         // Expansion hub motors
         leftSlide  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_LEFT_SLIDE);
-        intakePanMotor  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.INTAKE_PAN_MOTOR);
-//        leftTurn  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_LEFT_TURN);
-//        rightTurn = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_RIGHT_TURN);
+        rightSlide  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_RIGHT_SLIDE);
+
+        specimenIntakeMotor  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.SPECIMEN_INTAKE_MOTOR);
 
         getLeftFront().setDirection(DcMotorEx.Direction.REVERSE);
         getRightFront().setDirection(DcMotorEx.Direction.FORWARD);
         getLeftBack().setDirection(DcMotorEx.Direction.REVERSE);
         getRightBack().setDirection(DcMotorEx.Direction.FORWARD);
 
-        getLeftSlide().setDirection(DcMotorEx.Direction.FORWARD);
+        getLeftSlide().setDirection(DcMotorEx.Direction.REVERSE);
+        getRightSlide().setDirection(DcMotorEx.Direction.FORWARD);
 
-        getIntakePanMotor().setDirection(DcMotorEx.Direction.FORWARD);
-//        getRightSlide().setDirection(DcMotorEx.Direction.REVERSE);
+        getSpecimenIntakeMotor().setDirection(DcMotorEx.Direction.REVERSE);
 
-//        getLeftTurn().setDirection(DcMotorEx.Direction.REVERSE);
-//        getRightTurn().setDirection(DcMotorEx.Direction.FORWARD);
 
         // Servos
-        leftSlideServo  = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_LEFT_SLIDE_SERVO);
+//        leftSlideServo  = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_LEFT_SLIDE_SERVO);
 //        rightSlideServo = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_RIGHT_SLIDE_SERVO);
         shoulderServo  = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_SHOULDER_SERVO);
+        elbowServo  = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_ELBOW_SERVO);
+        wristServo  = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_WRIST_SERVO);
+        fingerServo  = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_FINGER_SERVO);
 
-        frontIntakeServo = myOpMode.hardwareMap.get(Servo.class, Constants.FRONT_INTAKE_SERVO);
-        backIntakeServo  = myOpMode.hardwareMap.get(Servo.class, Constants.BACK_INTAKE_SERVO);
-        intakePanServo  = myOpMode.hardwareMap.get(Servo.class, Constants.INTAKE_PAN_SERVO);
 
-        getLeftSlideServo().setDirection(Servo.Direction.REVERSE);
-        getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);
+//        frontIntakeServo = myOpMode.hardwareMap.get(Servo.class, Constants.FRONT_INTAKE_SERVO);
+//        backIntakeServo  = myOpMode.hardwareMap.get(Servo.class, Constants.BACK_INTAKE_SERVO);
+//        intakePanServo  = myOpMode.hardwareMap.get(Servo.class, Constants.INTAKE_PAN_SERVO);
+
+        specimenIntakeServo  = myOpMode.hardwareMap.get(Servo.class, Constants.SPECIMEN_INTAKE_SERVO);
+        outtakePanServo  = myOpMode.hardwareMap.get(Servo.class, Constants.OUTTAKE_PAN_SERVO);
+
+//        getLeftSlideServo().setDirection(Servo.Direction.REVERSE);
+//        getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);
 
 //        getRightSlideServo().setDirection(Servo.Direction.FORWARD);
 //        getRightSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);
@@ -118,29 +131,48 @@ public class RobotHardware {
         getShoulderServo().setDirection(Servo.Direction.REVERSE);
         getShoulderServo().setPosition(Constants.SHOULDER_SERVO_HOME_POSITION);
 
-        getFrontIntakeServo().setDirection(Servo.Direction.FORWARD);
-        getFrontIntakeServo().setPosition(Constants.MID_SERVO);
+        getElbowServo().setDirection(Servo.Direction.REVERSE);
+        getElbowServo().setPosition(Constants.ELBOW_SERVO_HOME_POSITION);
 
-        getBackIntakeServo().setDirection(Servo.Direction.FORWARD);
-        getBackIntakeServo().setPosition(Constants.MID_SERVO);
+        getWristServo().setDirection(Servo.Direction.REVERSE);
+//        getWristServo().setPosition(Constants.WRIST_SERVO_HOME_POSITION);
 
-        getIntakePanServo().setDirection(Servo.Direction.FORWARD);
-        getIntakePanServo().setPosition(Constants.INTAKE_PAN_SERVO_HOME_POSITION);
+        getFingerServo().setDirection(Servo.Direction.FORWARD);
+//        getFingerServo().setPosition(Constants.FINGER_SERVO_HOME_POSITION);
+
+        getSpecimenIntakeServo().setDirection(Servo.Direction.FORWARD);
+        getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_HOME_POSITION);
+
+        getOuttakePanServo().setDirection(Servo.Direction.FORWARD);
+        getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_HOME_POSITION);
+
+//        getFrontIntakeServo().setDirection(Servo.Direction.FORWARD);
+//        getFrontIntakeServo().setPosition(Constants.MID_SERVO);
+
+//        getBackIntakeServo().setDirection(Servo.Direction.FORWARD);
+//        getBackIntakeServo().setPosition(Constants.MID_SERVO);
+
+//        getIntakePanServo().setDirection(Servo.Direction.FORWARD);
+//        getIntakePanServo().setPosition(Constants.INTAKE_PAN_SERVO_HOME_POSITION);
 
         setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
+
         setMotorPowers(Constants.ZERO_POWER);
-
         getLeftSlide().setPower(Constants.ZERO_POWER);
-//        this.getRightSlide().setPower(Constants.ZERO_POWER);
+        getRightSlide().setPower(Constants.ZERO_POWER);
+        getSpecimenIntakeMotor().setPower(Constants.ZERO_POWER);
 
-//        this.getLeftTurn().setPower(Constants.ZERO_POWER);
-//        this.getRightTurn().setPower(Constants.ZERO_POWER);
+        LEFT_SLIDE_LOWER_LIMIT = getLeftSlide().getCurrentPosition();
+        LEFT_SLIDE_UPPER_LIMIT = LEFT_SLIDE_LOWER_LIMIT + Constants.SLIDE_TIX_COUNT;
 
-        SLIDE_LOWER_LIMIT = getLeftSlide().getCurrentPosition();
-        SLIDE_UPPER_LIMIT = SLIDE_LOWER_LIMIT + Constants.SLIDE_TIX_COUNT;
+        RIGHT_SLIDE_LOWER_LIMIT = getRightSlide().getCurrentPosition();
+        RIGHT_SLIDE_UPPER_LIMIT = RIGHT_SLIDE_LOWER_LIMIT + Constants.SLIDE_TIX_COUNT;
 
-        INTAKE_PAN_MOTOR_LOWER_LIMIT = getIntakePanMotor().getCurrentPosition();
+        SPECIMEN_INTAKE_MOTOR_SLIDE_LOWER_LIMIT = getSpecimenIntakeMotor().getCurrentPosition();
+        SPECIMEN_INTAKE_MOTOR_SLIDE_UPPER_LIMIT = SPECIMEN_INTAKE_MOTOR_SLIDE_LOWER_LIMIT + Constants.SPECIMEN_INTAKE_MOTOR_SLIDE_TIX_COUNT;
+
+//        INTAKE_PAN_MOTOR_LOWER_LIMIT = getIntakePanMotor().getCurrentPosition();
     }
 
     public void setMotorPowers(double leftFront, double rightFront, double leftBack, double rightBack) {
@@ -152,17 +184,12 @@ public class RobotHardware {
 
     public void setMotorPowersForSlide(double speed) {
         this.getLeftSlide().setPower(speed);
-//        this.getRightSlide().setPower(speed);
+        this.getRightSlide().setPower(speed);
     }
 
-    public void setMotorPowersForIntakePanMotor(double speed) {
-        this.getIntakePanMotor().setPower(speed);
+    public void setMotorPowersForSpecimenIntakeMotor(double speed) {
+        this.getSpecimenIntakeMotor().setPower(speed);
     }
-
-//    public void setMotorPowersForTurn(double speed) {
-//        this.getLeftTurn().setPower(speed);
-//        this.getRightTurn().setPower(speed);
-//    }
 
     public void setMotorPowers(double allWhealPower) {
         setMotorPowers(allWhealPower, allWhealPower, allWhealPower, allWhealPower);
@@ -177,17 +204,12 @@ public class RobotHardware {
 
     public void setModeForSlide(DcMotorEx.RunMode mode) {
         getLeftSlide().setMode(mode);
-//        getRightSlide().setMode(mode);
+        getRightSlide().setMode(mode);
     }
 
-    public void setModeForIntakePanMotor(DcMotorEx.RunMode mode) {
-        getIntakePanMotor().setMode(mode);
+    public void setModeForSpecimenIntakeMotor(DcMotorEx.RunMode mode) {
+        getSpecimenIntakeMotor().setMode(mode);
     }
-
-//    public void setModeForTurn(DcMotorEx.RunMode mode) {
-//        getLeftTurn().setMode(mode);
-//        getRightTurn().setMode(mode);
-//    }
 
     public void setZeroPowerBehavior() {
         getLeftFront().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -198,55 +220,33 @@ public class RobotHardware {
 
     public void setZeroPowerBehaviorForSlide() {
         getLeftSlide().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-//        getRightSlide().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        getRightSlide().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }
 
-    public void setZeroPowerBehaviorForIntakePanMotor() {
-        getIntakePanMotor().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+    public void setZeroPowerBehaviorForSpecimenIntakeMotor() {
+        getSpecimenIntakeMotor().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }
-
-//    public void setZeroPowerBehaviorForTurn() {
-//        getLeftTurn().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-//        getRightTurn().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-//    }
 
     public void setTargetPositionForSlide(Utility.Direction direction) {
 
         // Determine new target position, and pass to motor controller
         if (direction == Utility.Direction.FORWARD) {
-            getLeftSlide().setTargetPosition(SLIDE_UPPER_LIMIT);
+            getLeftSlide().setTargetPosition(LEFT_SLIDE_UPPER_LIMIT);
+            getRightSlide().setTargetPosition(RIGHT_SLIDE_UPPER_LIMIT);
         } else if (direction == Utility.Direction.BACKWARD) {
-            getLeftSlide().setTargetPosition(SLIDE_LOWER_LIMIT);
+            getLeftSlide().setTargetPosition(LEFT_SLIDE_LOWER_LIMIT);
+            getRightSlide().setTargetPosition(RIGHT_SLIDE_LOWER_LIMIT);
         }
     }
 
-    public void setTargetPositionForIntakePanMotor(int intakePanMotorTixCount, boolean manualMode) {
+    public void setTargetPositionForSpecimenIntakeMotor(Utility.Direction direction) {
 
-        if (manualMode) {
-            getIntakePanMotor().setTargetPosition(getIntakePanMotor().getCurrentPosition() + intakePanMotorTixCount);
-        } else {
-            getIntakePanMotor().setTargetPosition(INTAKE_PAN_MOTOR_LOWER_LIMIT + intakePanMotorTixCount);
+        if (direction == Utility.Direction.FORWARD) {
+            getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_UPPER_LIMIT);
+        } else if (direction == Utility.Direction.BACKWARD) {
+            getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_LOWER_LIMIT);
         }
     }
-
-//    public void turn(Utility.Direction direction, double turnInches) {
-//
-//        int leftTurnTarget = getLeftTurn().getCurrentPosition();
-//        int rightTurnTarget= getRightTurn().getCurrentPosition();
-//
-//        // Determine new target position, and pass to motor controller
-//        if (direction == Utility.Direction.FORWARD) {
-//            leftTurnTarget = leftTurnTarget + (int) (turnInches * COUNTS_PER_INCH);
-//            rightTurnTarget = rightTurnTarget + (int) (turnInches * COUNTS_PER_INCH);
-//        } else if (direction == Utility.Direction.BACKWARD) {
-//            leftTurnTarget = leftTurnTarget - (int) (turnInches * COUNTS_PER_INCH);
-//            rightTurnTarget = rightTurnTarget - (int) (turnInches * COUNTS_PER_INCH);
-//        }
-//
-//        // Set the Target Position
-//        getLeftTurn().setTargetPosition(leftTurnTarget);
-//        getRightTurn().setTargetPosition(rightTurnTarget);
-//    }
 
     public void setTargetPosition(Utility.Direction direction, double leftFrontInches, double rightFrontInches, double leftBackInches, double rightBackInches) {
 
@@ -306,7 +306,7 @@ public class RobotHardware {
 
         IMU.Parameters parameters = new IMU.Parameters(orientationOnRobot);
 
-        imu = myOpMode.hardwareMap.get(IMU.class, Constants.EXPANSION_IMU);
+        imu = myOpMode.hardwareMap.get(IMU.class, Constants.DEVICE_IMU);
         imu.initialize(parameters);
         imu.resetYaw();
     }
@@ -392,25 +392,29 @@ public class RobotHardware {
         return this.leftSlide;
     }
 
-    public DcMotorEx getLeftTurn() {
-        return this.leftTurn;
-    }
-
-    public DcMotorEx getRightTurn() {
-        return this.rightTurn;
-    }
-
 //    public Servo getRightSlideServo() {
 //        return this.rightSlideServo;
 //    }
 
 
-    public DcMotorEx getIntakePanMotor() {
-        return intakePanMotor;
+    public DcMotorEx getSpecimenIntakeMotor() {
+        return specimenIntakeMotor;
     }
 
     public Servo getShoulderServo() {
         return this.shoulderServo;
+    }
+
+    public Servo getElbowServo() {
+        return elbowServo;
+    }
+
+    public Servo getWristServo() {
+        return wristServo;
+    }
+
+    public Servo getFingerServo() {
+        return fingerServo;
     }
 
     public Servo getLeftSlideServo() {
@@ -431,6 +435,14 @@ public class RobotHardware {
 
     public IMU getImu() {
         return this.imu;
+    }
+
+    public Servo getSpecimenIntakeServo() {
+        return specimenIntakeServo;
+    }
+
+    public Servo getOuttakePanServo() {
+        return outtakePanServo;
     }
 
     public OpenCvCamera getControlHubCam() {

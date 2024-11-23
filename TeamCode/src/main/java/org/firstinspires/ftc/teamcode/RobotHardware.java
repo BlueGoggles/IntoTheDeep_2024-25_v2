@@ -70,42 +70,42 @@ public class RobotHardware {
         leftBack  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_BACK_LEFT);
         rightBack = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_BACK_RIGHT);
         // Expansion hub motors
-        intakeWheel  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_INTAKE_WHEEL);
-        intakeBelt = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_INTAKE_BELT);
-        viperSlide  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_VIPER_SLIDE);
-        leadScrew = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_LEAD_SCREW);
-        // Servos
-        panServo = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_PAN_SERVO);
-        panDoor  = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_PAN_DOOR);
-        leadScrewSwitch = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_LEAD_SCREW_SWITCH);
-
-        getPanServo().setDirection(Servo.Direction.FORWARD);
-        getPanServo().setPosition(Constants.PAN_HOME_POSITION);
-
-        getPanDoor().setDirection(Servo.Direction.FORWARD);
-        getPanDoor().setPosition(Constants.MID_SERVO);
-
-        getLeadScrewSwitch().setDirection(Servo.Direction.FORWARD);
-        getLeadScrewSwitch().setPosition(0.1);
+//        intakeWheel  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_INTAKE_WHEEL);
+//        intakeBelt = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_INTAKE_BELT);
+//        viperSlide  = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_VIPER_SLIDE);
+//        leadScrew = myOpMode.hardwareMap.get(DcMotorEx.class, Constants.DEVICE_LEAD_SCREW);
+//        // Servos
+//        panServo = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_PAN_SERVO);
+//        panDoor  = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_PAN_DOOR);
+//        leadScrewSwitch = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_LEAD_SCREW_SWITCH);
+//
+//        getPanServo().setDirection(Servo.Direction.FORWARD);
+//        getPanServo().setPosition(Constants.PAN_HOME_POSITION);
+//
+//        getPanDoor().setDirection(Servo.Direction.FORWARD);
+//        getPanDoor().setPosition(Constants.MID_SERVO);
+//
+//        getLeadScrewSwitch().setDirection(Servo.Direction.FORWARD);
+//        getLeadScrewSwitch().setPosition(0.1);
 
         getLeftFront().setDirection(DcMotorEx.Direction.REVERSE);
         getRightFront().setDirection(DcMotorEx.Direction.FORWARD);
         getLeftBack().setDirection(DcMotorEx.Direction.REVERSE);
         getRightBack().setDirection(DcMotorEx.Direction.FORWARD);
 
-        getIntakeWheel().setDirection(DcMotorEx.Direction.REVERSE);
-        getIntakeBelt().setDirection(DcMotorEx.Direction.FORWARD);
-        
-        this.getViperSlide().setDirection(DcMotorEx.Direction.REVERSE);
-        this.getLeadScrew().setDirection(DcMotorEx.Direction.FORWARD);
-
-        this.getViperSlide().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        this.getLeadScrew().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-        this.getViperSlide().setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        this.getLeadScrew().setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-
+//        getIntakeWheel().setDirection(DcMotorEx.Direction.REVERSE);
+//        getIntakeBelt().setDirection(DcMotorEx.Direction.FORWARD);
+//
+//        this.getViperSlide().setDirection(DcMotorEx.Direction.REVERSE);
+//        this.getLeadScrew().setDirection(DcMotorEx.Direction.FORWARD);
+//
+//        this.getViperSlide().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        this.getLeadScrew().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//
+//        setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+//        this.getViperSlide().setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+//        this.getLeadScrew().setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+//
         setMotorPowers(Constants.ZERO_POWER);
     }
 

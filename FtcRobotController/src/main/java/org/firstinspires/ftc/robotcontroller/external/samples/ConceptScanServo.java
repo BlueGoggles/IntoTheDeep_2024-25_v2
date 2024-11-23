@@ -103,6 +103,7 @@ public class ConceptScanServo extends LinearOpMode {
             telemetry.update();
 
             // Set the servo to the new position and pause;
+
             servo.setPosition(position);
             sleep(CYCLE_MS);
             idle();

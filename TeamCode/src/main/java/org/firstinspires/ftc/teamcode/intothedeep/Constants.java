@@ -9,19 +9,26 @@ public interface Constants {
     String DEVICE_LEFT_SLIDE = "leftSlide";
     String DEVICE_RIGHT_SLIDE = "rightSlide";
 
-    String INTAKE_PAN_MOTOR = "intakePanMotor";
+    String SPECIMEN_INTAKE_MOTOR = "specimenIntakeMotor";
 
     String DEVICE_RIGHT_TURN = "rightTurn";
     String DEVICE_LEFT_TURN = "leftTurn";
 
     String DEVICE_VIPER_SLIDE = "viperSlide";
     String DEVICE_SHOULDER_SERVO = "shoulderServo";
+    String DEVICE_ELBOW_SERVO = "elbowServo";
+    String DEVICE_WRIST_SERVO = "wristServo";
+    String DEVICE_FINGER_SERVO = "fingerServo";
     String DEVICE_RIGHT_SLIDE_SERVO = "rightSlideServo";
     String DEVICE_LEFT_SLIDE_SERVO = "leftSlideServo";
 
     String FRONT_INTAKE_SERVO = "frontIntakeServo";
     String BACK_INTAKE_SERVO = "backIntakeServo";
     String INTAKE_PAN_SERVO = "intakePanServo";
+
+    String SPECIMEN_INTAKE_SERVO = "specimenIntakeServo";
+
+    String OUTTAKE_PAN_SERVO = "outtakePanServo";
 
     String DEVICE_LEAD_SCREW_SWITCH = "leadScrewSwitch";
     String DEVICE_DRONE_LAUNCHER = "droneLauncher";
@@ -78,7 +85,7 @@ public interface Constants {
     int VIPER_SLIDE_VARIANCE = 50;
     int VIPER_SLIDE_NUDGE_COUNT = 75;
 
-    double TELEOP_DEFAULT_SPEED = 0.5;
+    double TELEOP_DEFAULT_SPEED = 1.0;
     double TELEOP_MODIFIED_SPEED = 1.0;
 
     double INTAKE_SERVO_IN_POSITION = 1.0;
@@ -96,10 +103,35 @@ public interface Constants {
     double SLIDE_SERVO_CARRY_POSITION = 0.8;
     double SLIDE_SERVO_DELIVERY_POSITION = 0.97;
 
-    double SHOULDER_SERVO_HOME_POSITION = 0.4;
+    double SHOULDER_SERVO_HOME_POSITION = 0.48;
     double SHOULDER_SERVO_CARRY_POSITION = 0.45;
     double SHOULDER_SERVO_PICKUP_POSITION = 0.67;
     double SHOULDER_SERVO_DELIVERY_POSITION = 0.3;
+
+    double ELBOW_SERVO_HOME_POSITION = 0.85;
+    double ELBOW_SERVO_CARRY_POSITION = 0.45;
+    double ELBOW_SERVO_PICKUP_POSITION = 0.67;
+    double ELBOW_SERVO_DELIVERY_POSITION = 0.3;
+
+    double WRIST_SERVO_HOME_POSITION = 0.5;
+    double WRIST_SERVO_CARRY_POSITION = 0.45;
+    double WRIST_SERVO_PICKUP_POSITION = 0.67;
+    double WRIST_SERVO_DELIVERY_POSITION = 0.3;
+
+    double FINGER_SERVO_HOME_POSITION = 0.5;
+    double FINGER_SERVO_CARRY_POSITION = 0.45;
+    double FINGER_SERVO_PICKUP_POSITION = 0.67;
+    double FINGER_SERVO_DELIVERY_POSITION = 0.3;
+
+    double SPECIMEN_INTAKE_SERVO_HOME_POSITION = 0.2;
+    double SPECIMEN_INTAKE_SERVO_CARRY_POSITION = 0.45;
+    double SPECIMEN_INTAKE_SERVO_PICKUP_POSITION = 0.67;
+    double SPECIMEN_INTAKE_SERVO_DELIVERY_POSITION = 0.3;
+
+    double OUTTAKE_PAN_SERVO_HOME_POSITION = 0.5;
+    double OUTTAKE_PAN_SERVO_CARRY_POSITION = 0.45;
+    double OUTTAKE_PAN_SERVO_PICKUP_POSITION = 0.67;
+    double OUTTAKE_PAN_SERVO_DELIVERY_POSITION = 0.3;
 
     double INTAKE_PAN_SERVO_HOME_POSITION = 0.0;
     double INTAKE_PAN_SERVO_CARRY_POSITION = 0.5;
@@ -116,7 +148,9 @@ public interface Constants {
 
     int INITIAL_WAIT_TIME_FOR_FRONT_STAGE = 7000; // MilliSeconds
 
-    int SLIDE_TIX_COUNT = 4800;
+    int SLIDE_TIX_COUNT = 2500;
+    int SPECIMEN_INTAKE_MOTOR_SLIDE_TIX_COUNT = 2200;
+
     double APRIL_TAG_DETECTION_WAIT_TIME = 1500; // MilliSeconds
 
     double RED_RIGHT_STRAFING_FOR_APRIL_TAG = 29;

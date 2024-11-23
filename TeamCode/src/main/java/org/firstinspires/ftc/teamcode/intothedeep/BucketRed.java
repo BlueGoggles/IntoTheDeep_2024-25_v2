@@ -27,7 +27,7 @@ public class BucketRed extends LinearOpMode {
 
     protected void parkRobot() {
 
-        Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_HOME_POSITION);
+//        Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_HOME_POSITION);
 //        sleep(2000);
 
         Utility.encoderDrive(robot, Utility.Direction.FORWARD, 20);
@@ -45,20 +45,21 @@ public class BucketRed extends LinearOpMode {
     }
 
     protected void deliverRightSample() {
-        Utility.encoderDrive(robot, Utility.Direction.BACKWARD, 1);
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD, 1.5);
+        Utility.encoderDrive(robot, Utility.Direction.RIGHT, 1.5);
 
         robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_PICKUP_POSITION);
-        Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_PICKUP_POSITION);
+//        Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_PICKUP_POSITION);
 
         robot.getFrontIntakeServo().setPosition(Constants.INTAKE_SERVO_IN_POSITION);
         robot.getBackIntakeServo().setPosition(Constants.INTAKE_SERVO_IN_POSITION);
         Utility.encoderDrive(robot, Utility.Direction.FORWARD, 0.5);
         sleep(2000);
 
-        Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_CARRY_POSITION);
+//        Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_CARRY_POSITION);
         robot.getShoulderServo().setPosition(0.45);
         sleep(500);
-        Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_PICKUP_POSITION);
+//        Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_PICKUP_POSITION);
         robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_DELIVERY_POSITION);
 
         robot.getFrontIntakeServo().setPosition(Constants.INTAKE_SERVO_STOP_POSITION);
@@ -87,7 +88,7 @@ public class BucketRed extends LinearOpMode {
         Utility.encoderDrive(robot, Utility.Direction.FORWARD, 4);
         Utility.encoderDrive(robot, Utility.Direction.LEFT, 12);
         Utility.turnToPID(robot, -45);
-        Utility.encoderDrive(robot, Utility.Direction.BACKWARD, 5);
+        Utility.encoderDrive(robot, Utility.Direction.BACKWARD, 0.3, 7);
 
         deliverSample();
     }
@@ -96,7 +97,7 @@ public class BucketRed extends LinearOpMode {
         robot.getShoulderServo().setPosition(0.5);
         sleep(350);
         Utility.slide(robot, Utility.Direction.FORWARD, Constants.AUTON_DRIVE_SPEED);
-        Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_HOME_POSITION);
+//        Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_HOME_POSITION);
 
         robot.getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_DELIVERY_POSITION);
         sleep(1000);
@@ -104,7 +105,7 @@ public class BucketRed extends LinearOpMode {
 
         Utility.slide(robot, Utility.Direction.BACKWARD, Constants.AUTON_DRIVE_SPEED);
 
-        Utility.encoderDrive(robot, Utility.Direction.FORWARD, 10);
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD, 8);
         Utility.turnToPID(robot, 0);
     }
 }

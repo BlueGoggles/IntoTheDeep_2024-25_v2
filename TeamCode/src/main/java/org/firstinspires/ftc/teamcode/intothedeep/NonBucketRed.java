@@ -39,7 +39,7 @@ public class NonBucketRed extends LinearOpMode {
         robot.getShoulderServo().setPosition(0.5);
         sleep(350);
         Utility.slide(robot, Utility.Direction.FORWARD, Constants.AUTON_DRIVE_SPEED);
-        Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_HOME_POSITION);
+//        Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_HOME_POSITION);
 
         robot.getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_DELIVERY_POSITION);
         sleep(1000);
