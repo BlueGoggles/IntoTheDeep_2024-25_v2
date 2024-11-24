@@ -23,6 +23,12 @@ public class Utility {
         BACKWARD
     }
 
+    public enum Stage {
+        ZERO,
+        ONE,
+        TWO
+    }
+
     public enum Color {
         RED(1),
         BLUE(2);
@@ -139,13 +145,13 @@ public class Utility {
         }
     }
 
-    public static void slideSpecimenIntake(RobotHardware robot, Utility.Direction direction, double speed) {
+    public static void slideSpecimenIntake(RobotHardware robot, Utility.Stage stage, double speed) {
 
         // Ensure that the OpMode is still active
         if (robot.getMyOpMode().opModeIsActive()) {
 
             // Set Target Position
-            robot.setTargetPositionForSpecimenIntakeMotor(direction);
+            robot.setTargetPositionForSpecimenIntakeMotor(stage);
 
 
             // Turn On RUN_TO_POSITION

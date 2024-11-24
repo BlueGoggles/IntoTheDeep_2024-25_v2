@@ -188,11 +188,15 @@ public class MainTeleOp extends LinearOpMode {
                 // NOTE: This program is single threaded right now. So we can't do multiple operations at once.
 
                 if (gamepad2.right_bumper) {
-                    Utility.slideSpecimenIntake(robot, Utility.Direction.FORWARD,1.0);
+                    Utility.slideSpecimenIntake(robot, Utility.Stage.TWO,1.0);
                 }
 
                 if (gamepad2.left_bumper) {
-                    Utility.slideSpecimenIntake(robot, Utility.Direction.BACKWARD,1.0);
+                    Utility.slideSpecimenIntake(robot, Utility.Stage.ZERO,1.0);
+                }
+
+                if (gamepad2.left_trigger > 0.5) {
+                    Utility.slideSpecimenIntake(robot, Utility.Stage.ONE,1.0);
                 }
 
                 if (gamepad1.right_bumper) {
@@ -202,6 +206,60 @@ public class MainTeleOp extends LinearOpMode {
                 if (gamepad1.left_bumper) {
                     Utility.slide(robot, Utility.Direction.BACKWARD,1.0);
                 }
+
+                if (gamepad1.a) {
+                    robot.getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_OPEN_POSITION);
+                }
+
+                if (gamepad1.b) {
+                    robot.getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_CLOSE_POSITION);
+                }
+
+                if (gamepad2.a) {
+                    robot.getFingerServo().setPosition(Constants.FINGER_SERVO_RUN_POSITION);
+                }
+
+                if (gamepad2.b) {
+                    robot.getFingerServo().setPosition(Constants.FINGER_SERVO_RUN_OPPOSITE_POSITION);
+                    sleep(300);
+                    robot.getFingerServo().setPosition(Constants.FINGER_SERVO_STOP_POSITION);
+                    robot.getShoulderServo().setPosition(0.6);
+                    sleep(300);
+                    robot.getElbowServo().setPosition(Constants.ELBOW_SERVO_HOME_POSITION);
+                    robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_HOME_POSITION);
+                }
+
+                if (gamepad2.back) {
+                    robot.getFingerServo().setPosition(Constants.FINGER_SERVO_STOP_POSITION);
+                }
+
+                if (gamepad2.start) {
+                    robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_HOME_POSITION);
+                }
+
+                if (gamepad2.x) {
+                    robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_PICKUP_POSITION);
+                    robot.getElbowServo().setPosition(Constants.ELBOW_SERVO_PICKUP_POSITION);
+                }
+
+                if (gamepad2.y) {
+                    robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_DELIVERY_POSITION);
+                    robot.getElbowServo().setPosition(Constants.ELBOW_SERVO_DELIVERY_POSITION);
+                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_HOME_POSITION);
+                }
+                if (gamepad2.dpad_down) {
+                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_HOME_POSITION);
+                }
+                if (gamepad2.dpad_right) {
+                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_45_POSITION);
+                }
+                if (gamepad2.dpad_up) {
+                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_90_POSITION);
+                }
+                if (gamepad2.dpad_left) {
+                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_180_POSITION);
+                }
+
 
 //                if (gamepad1.a) {
 //                    robot.getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);

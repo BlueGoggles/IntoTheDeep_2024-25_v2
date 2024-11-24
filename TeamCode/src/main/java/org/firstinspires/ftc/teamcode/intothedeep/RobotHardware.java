@@ -128,20 +128,22 @@ public class RobotHardware {
 //        getRightSlideServo().setDirection(Servo.Direction.FORWARD);
 //        getRightSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);
 
+
+        getElbowServo().setDirection(Servo.Direction.FORWARD);
+        getElbowServo().setPosition(Constants.ELBOW_SERVO_HOME_POSITION);
+        myOpMode.sleep(300);
+
         getShoulderServo().setDirection(Servo.Direction.REVERSE);
         getShoulderServo().setPosition(Constants.SHOULDER_SERVO_HOME_POSITION);
 
-        getElbowServo().setDirection(Servo.Direction.REVERSE);
-        getElbowServo().setPosition(Constants.ELBOW_SERVO_HOME_POSITION);
-
         getWristServo().setDirection(Servo.Direction.REVERSE);
-//        getWristServo().setPosition(Constants.WRIST_SERVO_HOME_POSITION);
+        getWristServo().setPosition(Constants.WRIST_SERVO_HOME_POSITION);
 
-        getFingerServo().setDirection(Servo.Direction.FORWARD);
-//        getFingerServo().setPosition(Constants.FINGER_SERVO_HOME_POSITION);
+        getFingerServo().setDirection(Servo.Direction.REVERSE);
+        getFingerServo().setPosition(Constants.FINGER_SERVO_STOP_POSITION);
 
-        getSpecimenIntakeServo().setDirection(Servo.Direction.FORWARD);
-        getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_HOME_POSITION);
+        getSpecimenIntakeServo().setDirection(Servo.Direction.REVERSE);
+        getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_OPEN_POSITION);
 
         getOuttakePanServo().setDirection(Servo.Direction.FORWARD);
         getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_HOME_POSITION);
@@ -239,12 +241,14 @@ public class RobotHardware {
         }
     }
 
-    public void setTargetPositionForSpecimenIntakeMotor(Utility.Direction direction) {
+    public void setTargetPositionForSpecimenIntakeMotor(Utility.Stage stage) {
 
-        if (direction == Utility.Direction.FORWARD) {
-            getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_UPPER_LIMIT);
-        } else if (direction == Utility.Direction.BACKWARD) {
+        if (stage == Utility.Stage.ZERO) {
             getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_LOWER_LIMIT);
+        } else if (stage == Utility.Stage.ONE) {
+            getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_UPPER_LIMIT - 900);
+        } else if (stage == Utility.Stage.TWO) {
+            getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_UPPER_LIMIT);
         }
     }
 
