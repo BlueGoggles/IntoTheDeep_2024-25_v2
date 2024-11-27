@@ -26,7 +26,8 @@ public class Utility {
     public enum Stage {
         ZERO,
         ONE,
-        TWO
+        TWO,
+        THREE;
     }
 
     public enum Color {
@@ -169,8 +170,7 @@ public class Utility {
 
             // Stop all motion;
 //            robot.setMotorPowersForSlide(Constants.ZERO_POWER);
-            robot.setZeroPowerBehaviorForSpecimenIntakeMotor();
-
+//            robot.setZeroPowerBehaviorForSpecimenIntakeMotor();
 
             // Turn off RUN_TO_POSITION
 //            robot.setModeForSpecimenIntakeMotor(DcMotorEx.RunMode.RUN_USING_ENCODER);

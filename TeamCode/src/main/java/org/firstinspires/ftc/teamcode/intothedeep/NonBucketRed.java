@@ -14,40 +14,75 @@ public class NonBucketRed extends LinearOpMode {
 
         Utility.initializeRobot(robot);
 
-        waitForStart();
 
-        deliverOnRobotSample();
-        parkRobot();
+        waitForStart();
+//        Utility.encoderDrive(robot, Utility.Direction.LEFT,0.5, 2);
+
+        hangOnRobotSpecimen();
+//        parkRobot();
     }
 
     protected void parkRobot() {
 
         Utility.encoderDrive(robot, Utility.Direction.RIGHT, 0.5,70);
     }
-    protected void deliverOnRobotSample() {
+    protected void hangOnRobotSpecimen() {
 
-        sleep(initialWaitTime);
-        Utility.encoderDrive(robot, Utility.Direction.FORWARD, 0.5, 4);
-        Utility.encoderDrive(robot, Utility.Direction.LEFT, 0.5,46);
-        Utility.turnToPID(robot, -45);
-        Utility.encoderDrive(robot, Utility.Direction.BACKWARD, 0.5,5);
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.7, 20);
 
-        deliverSample();
+        Utility.encoderDrive(robot, Utility.Direction.LEFT,0.5, 8);
+
+        hangSpecimen();
+
+        Utility.slideSpecimenIntake(robot, Utility.Stage.ZERO, 1.0);
+
+        Utility.encoderDrive(robot, Utility.Direction.RIGHT,0.5, 33);
+
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 24);
+
+        Utility.turnToPID(robot, 180);
+
+        Utility.encoderDrive(robot, Utility.Direction.LEFT,0.5, 11);
+
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 40);
+
+        Utility.encoderDrive(robot, Utility.Direction.BACKWARD,0.5, 40);
+
+        Utility.encoderDrive(robot, Utility.Direction.LEFT,0.5, 10);
+
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5,40);
+
+        Utility.encoderDrive(robot, Utility.Direction.BACKWARD,0.5, 1);
+
+        Utility.encoderDrive(robot, Utility.Direction.RIGHT,0.5, 10);
+
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 7);
+
+        robot.getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_CLOSE_POSITION);
+        sleep(200);
+
+        Utility.slideSpecimenIntake(robot, Utility.Stage.ONE, 1.0);
+
+        Utility.encoderDrive(robot, Utility.Direction.BACKWARD,0.5, 15);
+
+        Utility.turnToPID(robot, 0);
+
+        Utility.encoderDrive(robot, Utility.Direction.LEFT,0.5, 40);
+
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 5);
+
+        hangSpecimen();
+
+       // Utility.turnToPID(robot, -45);
     }
 
-    protected void deliverSample() {
-        robot.getShoulderServo().setPosition(0.5);
-        sleep(350);
-        Utility.slide(robot, Utility.Direction.FORWARD, Constants.AUTON_DRIVE_SPEED);
-//        Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_HOME_POSITION);
+    protected void hangSpecimen() {
 
-        robot.getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_DELIVERY_POSITION);
-        sleep(1000);
-        robot.getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);
+        Utility.slideSpecimenIntake(robot, Utility.Stage.THREE, 1.0);
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 5);
+        Utility.slideSpecimenIntake(robot, Utility.Stage.TWO, 1.0);
+        robot.getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_OPEN_POSITION);
+        Utility.encoderDrive(robot, Utility.Direction.BACKWARD,0.7, 5);
 
-        Utility.slide(robot, Utility.Direction.BACKWARD, Constants.AUTON_DRIVE_SPEED);
-
-        Utility.encoderDrive(robot, Utility.Direction.FORWARD, 0.5,5);
-        Utility.turnToPID(robot, 0);
     }
 }

@@ -143,7 +143,7 @@ public class RobotHardware {
         getFingerServo().setPosition(Constants.FINGER_SERVO_STOP_POSITION);
 
         getSpecimenIntakeServo().setDirection(Servo.Direction.REVERSE);
-        getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_OPEN_POSITION);
+        getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_CLOSE_POSITION);
 
         getOuttakePanServo().setDirection(Servo.Direction.FORWARD);
         getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_HOME_POSITION);
@@ -246,8 +246,10 @@ public class RobotHardware {
         if (stage == Utility.Stage.ZERO) {
             getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_LOWER_LIMIT);
         } else if (stage == Utility.Stage.ONE) {
-            getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_UPPER_LIMIT - 900);
+            getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_LOWER_LIMIT + 50);
         } else if (stage == Utility.Stage.TWO) {
+            getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_UPPER_LIMIT - 700);
+        } else if (stage == Utility.Stage.THREE) {
             getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_UPPER_LIMIT);
         }
     }

@@ -44,7 +44,7 @@ public interface Constants {
     double OBJECT_WIDTH_IN_INCHES = 3.0;  // The actual width of the object in real-world units
     int CAMERA_WIDTH = 640; // width  of wanted camera resolution
     int CAMERA_HEIGHT = 360; // height of wanted camera resolution
-    double COUNTS_PER_MOTOR_REV = 537.7 ;    // eg: GoBILDA 312 RPM Yellow Jacket
+    double COUNTS_PER_MOTOR_REV = 384.5 ;    // eg: GoBILDA 435 RPM Yellow Jacket
     double DRIVE_GEAR_REDUCTION = 1.0 ;     // No External Gearing.
     double WHEEL_DIAMETER_INCHES = 3.78 ;     // For figuring out circumference
     double CAMERA_FOCAL_LENGTH = 793.33;
@@ -144,8 +144,8 @@ public interface Constants {
 
     int INITIAL_WAIT_TIME_FOR_FRONT_STAGE = 7000; // MilliSeconds
 
-    int SLIDE_TIX_COUNT = 2500;
-    int SPECIMEN_INTAKE_MOTOR_SLIDE_TIX_COUNT = 2200;
+    int SLIDE_TIX_COUNT = 3000;
+    int SPECIMEN_INTAKE_MOTOR_SLIDE_TIX_COUNT = 2000;
 
     double APRIL_TAG_DETECTION_WAIT_TIME = 1500; // MilliSeconds
 
