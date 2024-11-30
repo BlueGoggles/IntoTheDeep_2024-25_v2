@@ -114,13 +114,13 @@ public class Utility {
 
     }
 
-    public static void slide(RobotHardware robot, Utility.Direction direction, double speed) {
+    public static void slide(RobotHardware robot, Utility.Stage stage, double speed) {
 
         // Ensure that the OpMode is still active
         if (robot.getMyOpMode().opModeIsActive()) {
 
             // Set Target Position
-            robot.setTargetPositionForSlide(direction);
+            robot.setTargetPositionForSlide(stage);
 
 
             // Turn On RUN_TO_POSITION

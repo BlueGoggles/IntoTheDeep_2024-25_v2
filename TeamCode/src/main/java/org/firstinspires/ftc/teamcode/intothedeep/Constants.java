@@ -144,7 +144,7 @@ public interface Constants {
 
     int INITIAL_WAIT_TIME_FOR_FRONT_STAGE = 7000; // MilliSeconds
 
-    int SLIDE_TIX_COUNT = 3000;
+    int SLIDE_TIX_COUNT = 2300;
     int SPECIMEN_INTAKE_MOTOR_SLIDE_TIX_COUNT = 2000;
 
     double APRIL_TAG_DETECTION_WAIT_TIME = 1500; // MilliSeconds

@@ -229,15 +229,21 @@ public class RobotHardware {
         getSpecimenIntakeMotor().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }
 
-    public void setTargetPositionForSlide(Utility.Direction direction) {
+    public void setTargetPositionForSlide(Utility.Stage stage) {
 
         // Determine new target position, and pass to motor controller
-        if (direction == Utility.Direction.FORWARD) {
-            getLeftSlide().setTargetPosition(LEFT_SLIDE_UPPER_LIMIT);
-            getRightSlide().setTargetPosition(RIGHT_SLIDE_UPPER_LIMIT);
-        } else if (direction == Utility.Direction.BACKWARD) {
+        if (stage == Utility.Stage.ZERO) {
             getLeftSlide().setTargetPosition(LEFT_SLIDE_LOWER_LIMIT);
             getRightSlide().setTargetPosition(RIGHT_SLIDE_LOWER_LIMIT);
+        } else if (stage == Utility.Stage.ONE) {
+            getLeftSlide().setTargetPosition(LEFT_SLIDE_UPPER_LIMIT - 800);
+            getRightSlide().setTargetPosition(RIGHT_SLIDE_UPPER_LIMIT - 800);
+        } else if (stage == Utility.Stage.TWO) {
+            getLeftSlide().setTargetPosition(LEFT_SLIDE_UPPER_LIMIT - 500);
+            getRightSlide().setTargetPosition(RIGHT_SLIDE_UPPER_LIMIT - 500);
+        } else if (stage == Utility.Stage.THREE) {
+            getLeftSlide().setTargetPosition(LEFT_SLIDE_UPPER_LIMIT);
+            getRightSlide().setTargetPosition(RIGHT_SLIDE_UPPER_LIMIT);
         }
     }
 

@@ -188,7 +188,7 @@ public class MainTeleOp extends LinearOpMode {
                 // NOTE: This program is single threaded right now. So we can't do multiple operations at once.
 
                 if (gamepad2.right_bumper) {
-                    Utility.slideSpecimenIntake(robot, Utility.Stage.TWO,0.8);
+                    Utility.slideSpecimenIntake(robot, Utility.Stage.THREE,0.8);
                 }
 
                 if (gamepad2.left_bumper) {
@@ -196,15 +196,27 @@ public class MainTeleOp extends LinearOpMode {
                 }
 
                 if (gamepad2.left_trigger > 0.5) {
+                    Utility.slideSpecimenIntake(robot, Utility.Stage.TWO,0.8);
+                }
+
+                if (gamepad2.right_trigger > 0.5) {
                     Utility.slideSpecimenIntake(robot, Utility.Stage.ONE,0.8);
                 }
 
                 if (gamepad1.right_bumper) {
-                    Utility.slide(robot, Utility.Direction.FORWARD,0.5);
+                    Utility.slide(robot, Utility.Stage.THREE,0.5);
                 }
 
                 if (gamepad1.left_bumper) {
-                    Utility.slide(robot, Utility.Direction.BACKWARD,0.5);
+                    Utility.slide(robot, Utility.Stage.ZERO,0.5);
+                }
+
+                if (gamepad1.left_trigger > 0.5) {
+                    Utility.slide(robot, Utility.Stage.ONE,0.5);
+                }
+
+                if (gamepad1.right_trigger > 0.5) {
+                    Utility.slide(robot, Utility.Stage.TWO,0.5);
                 }
 
                 if (gamepad1.a) {
@@ -347,7 +359,7 @@ public class MainTeleOp extends LinearOpMode {
 
                 telemetry.addData("Specimen Intake Motor position: ", robot.getSpecimenIntakeMotor().getCurrentPosition());
 
-//                telemetry.addData("Front Intake Servo: ", robot.getFrontIntakeServo().getPosition());
+//                telemetry.addData("Finger Servo: ", robot.getFrontIntakeServo().getPosition());
 //                telemetry.addData("Back Intake Servo: ", robot.getBackIntakeServo().getPosition());
 //                telemetry.addData("Shoulder Servo: ", robot.getShoulderServo().getPosition());
 //                telemetry.addData("Slide Servo: ", robot.getLeftSlideServo().getPosition());

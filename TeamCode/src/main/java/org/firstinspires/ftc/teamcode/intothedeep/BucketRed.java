@@ -17,11 +17,13 @@ public class BucketRed extends LinearOpMode {
 
         waitForStart();
 
-        deliverOnRobotSample();
-        deliverRightSample();
+        Utility.encoderDrive(robot, Utility.Direction.BACKWARD, 25);
+        sleep(5000);
+//        deliverOnRobotSample();
+//        deliverRightSample();
 //        deliverCenterSample();
 //        deliverLeftSample();
-        parkRobot();
+//        parkRobot();
 
     }
 
@@ -96,14 +98,14 @@ public class BucketRed extends LinearOpMode {
     protected void deliverSample() {
         robot.getShoulderServo().setPosition(0.5);
         sleep(350);
-        Utility.slide(robot, Utility.Direction.FORWARD, Constants.AUTON_DRIVE_SPEED);
+//        Utility.slide(robot, Utility.Direction.FORWARD, Constants.AUTON_DRIVE_SPEED);
 //        Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_HOME_POSITION);
 
         robot.getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_DELIVERY_POSITION);
         sleep(1000);
         robot.getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);
 
-        Utility.slide(robot, Utility.Direction.BACKWARD, Constants.AUTON_DRIVE_SPEED);
+//        Utility.slide(robot, Utility.Direction.BACKWARD, Constants.AUTON_DRIVE_SPEED);
 
         Utility.encoderDrive(robot, Utility.Direction.FORWARD, 8);
         Utility.turnToPID(robot, 0);
