@@ -17,7 +17,8 @@ public class BucketRed extends LinearOpMode {
 
         waitForStart();
 
-        Utility.encoderDrive(robot, Utility.Direction.BACKWARD, 25);
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD, 25);
+        Utility.encoderDrive(robot, Utility.Direction.LEFT, 25);
         sleep(5000);
 //        deliverOnRobotSample();
 //        deliverRightSample();

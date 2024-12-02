@@ -169,11 +169,11 @@ public class MainTeleOp extends LinearOpMode {
                     Max = Math.abs(BR_Power);
                 }
 
-                if (gamepad1.left_trigger > Constants.ZERO_POWER) {
-                    teleOpSpeed = Constants.TELEOP_MODIFIED_SPEED;
-                } else {
+//                if (gamepad1.left_trigger > Constants.ZERO_POWER) {
+//                    teleOpSpeed = Constants.TELEOP_MODIFIED_SPEED;
+//                } else {
                     teleOpSpeed = Constants.TELEOP_DEFAULT_SPEED;
-                }
+//                }
 
                 if (Max > teleOpSpeed) {
                     FR_Power = (FR_Power * teleOpSpeed) / Max;
@@ -187,51 +187,55 @@ public class MainTeleOp extends LinearOpMode {
 
                 // NOTE: This program is single threaded right now. So we can't do multiple operations at once.
 
-                if (gamepad2.right_bumper) {
-                    Utility.slideSpecimenIntake(robot, Utility.Stage.THREE,0.8);
-                }
-
-                if (gamepad2.left_bumper) {
-                    Utility.slideSpecimenIntake(robot, Utility.Stage.ZERO,0.8);
-                }
-
-                if (gamepad2.left_trigger > 0.5) {
-                    Utility.slideSpecimenIntake(robot, Utility.Stage.TWO,0.8);
-                }
-
-                if (gamepad2.right_trigger > 0.5) {
-                    Utility.slideSpecimenIntake(robot, Utility.Stage.ONE,0.8);
-                }
-
                 if (gamepad1.right_bumper) {
-                    Utility.slide(robot, Utility.Stage.THREE,0.5);
+                    Utility.slideSpecimenIntake(robot, Utility.Stage.THREE,1.0); // good
+                }
+
+                if (gamepad1.x) {
+                    Utility.slideSpecimenIntake(robot, Utility.Stage.ZERO,1.0);  //good
                 }
 
                 if (gamepad1.left_bumper) {
-                    Utility.slide(robot, Utility.Stage.ZERO,0.5);
+                    Utility.slideSpecimenIntake(robot, Utility.Stage.TWO,1.0);  // good
                 }
 
-                if (gamepad1.left_trigger > 0.5) {
-                    Utility.slide(robot, Utility.Stage.ONE,0.5);
+                if (gamepad1.y) {
+                    Utility.slideSpecimenIntake(robot, Utility.Stage.ONE,1.0);  // good
+                }
+
+                if (gamepad2.start) {
+                    Utility.slide(robot, Utility.Stage.THREE,1.0); // basket delivery
+                }
+
+                if (gamepad2.back) {
+                    robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_HOME_POSITION);
+                    Utility.slide(robot, Utility.Stage.ZERO,1.0); //home + 50
+                }
+
+                if (gamepad1.start) {
+                    robot.getLeftSlide().setPositionPIDFCoefficients(3.0);
+//                    Utility.slide(robot, Utility.Stage.TWO,1.0);
+                    Utility.slide(robot, Utility.Stage.ONE,1.0);  // bottom hang position
                 }
 
                 if (gamepad1.right_trigger > 0.5) {
-                    Utility.slide(robot, Utility.Stage.TWO,0.5);
-                }
-
-                if (gamepad1.a) {
-                    robot.getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_OPEN_POSITION);
-                }
-
-                if (gamepad1.b) {
                     robot.getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_CLOSE_POSITION);
                 }
 
-                if (gamepad2.a) {
-                    robot.getFingerServo().setPosition(Constants.FINGER_SERVO_RUN_POSITION);
+                if (gamepad1.left_trigger > 0.5) {
+                    robot.getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_OPEN_POSITION);
                 }
 
-                if (gamepad2.b) {
+                if (gamepad1.a) {
+                    robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_DELIVERY_POSITION);
+                }
+
+                // Deliver the sample to the outtakePan
+                if (gamepad2.right_bumper) {
+                    robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_RECEIVE_POSITION);
+                    robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_DELIVERY_POSITION);
+                    robot.getElbowServo().setPosition(Constants.ELBOW_SERVO_DELIVERY_POSITION);
+                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_HOME_POSITION);
                     robot.getFingerServo().setPosition(Constants.FINGER_SERVO_RUN_OPPOSITE_POSITION);
                     sleep(300);
                     robot.getFingerServo().setPosition(Constants.FINGER_SERVO_STOP_POSITION);
@@ -241,113 +245,46 @@ public class MainTeleOp extends LinearOpMode {
                     robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_HOME_POSITION);
                 }
 
-                if (gamepad2.back) {
+                if (gamepad2.left_trigger > 0.5) {
+                    robot.getFingerServo().setPosition(Constants.FINGER_SERVO_RUN_OPPOSITE_POSITION);
+                }
+
+                if (gamepad2.left_bumper) {
                     robot.getFingerServo().setPosition(Constants.FINGER_SERVO_STOP_POSITION);
                 }
 
-                if (gamepad2.start) {
+                if (gamepad2.a) {
                     robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_HOME_POSITION);
                 }
 
-                if (gamepad2.x) {
+                if (gamepad2.b) {
                     robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_PICKUP_POSITION);
                     robot.getElbowServo().setPosition(Constants.ELBOW_SERVO_PICKUP_POSITION);
                 }
 
-                if (gamepad2.y) {
-                    robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_DELIVERY_POSITION);
-                    robot.getElbowServo().setPosition(Constants.ELBOW_SERVO_DELIVERY_POSITION);
-                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_HOME_POSITION);
-                }
+//                if (gamepad2.right_bumper) {
+//                    robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_RECEIVE_POSITION);
+//                    robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_DELIVERY_POSITION);
+//                    robot.getElbowServo().setPosition(Constants.ELBOW_SERVO_DELIVERY_POSITION);
+//                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_HOME_POSITION);
+//                }
                 if (gamepad2.dpad_down) {
                     robot.getWristServo().setPosition(Constants.WRIST_SERVO_HOME_POSITION);
                 }
-                if (gamepad2.dpad_right) {
+                if (gamepad2.dpad_left) {
                     robot.getWristServo().setPosition(Constants.WRIST_SERVO_45_POSITION);
                 }
                 if (gamepad2.dpad_up) {
                     robot.getWristServo().setPosition(Constants.WRIST_SERVO_90_POSITION);
                 }
-                if (gamepad2.dpad_left) {
+                if (gamepad2.dpad_right) {
                     robot.getWristServo().setPosition(Constants.WRIST_SERVO_180_POSITION);
                 }
 
-
-//                if (gamepad1.a) {
-//                    robot.getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);
-//                }
-//
-//                if (gamepad1.b) {
-//                    robot.getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_DELIVERY_POSITION);
-//                }
-//
-//                if (gamepad1.x) {
-//                    robot.getShoulderServo().setPosition(0.5);
-//                    sleep(350);
-//                    Utility.slide(robot, Utility.Direction.FORWARD, Constants.MAX_POWER);
-////                    Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_HOME_POSITION);
-//                }
-//
-//                if (gamepad1.y) {
-//                    robot.getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);
-//                    Utility.slide(robot, Utility.Direction.BACKWARD, Constants.MAX_POWER);
-//                }
-//
-//                if (gamepad2.a) {
-////                    Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_PICKUP_POSITION);
-//                }
-//
-//                if (gamepad2.b) {
-////                    robot.getFrontIntakeServo().setPosition(Constants.INTAKE_SERVO_IN_POSITION);
-////                    robot.getBackIntakeServo().setPosition(Constants.INTAKE_SERVO_IN_POSITION);
-////                    Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_CARRY_POSITION);
-//                }
-//
-//                if (gamepad2.left_trigger > 0.5) {
-////                    Utility.turnIntakePan(robot, 50, true);
-//                }
-//
-//                if (gamepad2.right_trigger > 0.5) {
-////                    Utility.turnIntakePan(robot, -50, true);
-//                }
-//
-//                double intakeServoPosition = 0.5;
-//
-////                if (gamepad2.left_bumper) {
-////                    intakeServoPosition = Constants.INTAKE_SERVO_OUT_POSITION;
-////                } else if (gamepad2.right_bumper) {
-////                    intakeServoPosition = Constants.INTAKE_SERVO_IN_POSITION;
-////                }
-//
-//
-//
-////                robot.getFrontIntakeServo().setPosition(intakeServoPosition);
-////                robot.getBackIntakeServo().setPosition(intakeServoPosition);
-//
-//                if (gamepad2.dpad_down) {
-////                    Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_CARRY_POSITION);
-//                    robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_PICKUP_POSITION);
-//                }
-//
-//                if (gamepad2.dpad_right) {
-////                    Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_CARRY_POSITION);
-//                    robot.getShoulderServo().setPosition(0.45);
-//                    sleep(500);
-////                    Utility.turnIntakePan(robot, Constants.INTAKE_PAN_MOTOR_PICKUP_POSITION);
-//                    robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_DELIVERY_POSITION);
-////                    robot.getFrontIntakeServo().setPosition(Constants.INTAKE_SERVO_STOP_POSITION);
-////                    robot.getBackIntakeServo().setPosition(Constants.INTAKE_SERVO_STOP_POSITION);
-//                }
-//
-//
-//                if (gamepad2.dpad_up) {
-//                    robot.getShoulderServo().setPosition(0.5);
-//                }
-
                 // Press this button to reset the yaw during Teleop. Only allow this to happen if we are in manual mode.
-                if (gamepad1.y && enableManualOverride) {
-                    robot.getImu().resetYaw();
-                }
+//                if (gamepad1.y && enableManualOverride) {
+//                    robot.getImu().resetYaw();
+//                }
 
                 telemetry.addData("Front Left Power: ", robot.getLeftFront().getPower());
                 telemetry.addData("Front Right Power: ", robot.getRightFront().getPower());
@@ -356,6 +293,8 @@ public class MainTeleOp extends LinearOpMode {
 
                 telemetry.addData("Left Slide Motor position: ", robot.getLeftSlide().getCurrentPosition());
                 telemetry.addData("Right Slide Motor position: ", robot.getRightSlide().getCurrentPosition());
+
+
 
                 telemetry.addData("Specimen Intake Motor position: ", robot.getSpecimenIntakeMotor().getCurrentPosition());
 

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.intothedeep;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 @Autonomous(name = "Non Bucket Red", group = "RedAuton")
@@ -24,17 +25,26 @@ public class NonBucketRed extends LinearOpMode {
 
     protected void parkRobot() {
 
-        Utility.encoderDrive(robot, Utility.Direction.RIGHT, 0.5,70);
+        Utility.encoderDrive(robot, Utility.Direction.BACKWARD,0.7, 20);
+
+        Utility.encoderDrive(robot, Utility.Direction.RIGHT,0.7, 40);
     }
+
     protected void hangOnRobotSpecimen() {
 
         Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.7, 20);
 
+        Utility.turnToPID(robot, 0);
+
         Utility.encoderDrive(robot, Utility.Direction.LEFT,0.5, 8);
+
+        Utility.turnToPID(robot, 0);
 
         hangSpecimen();
 
         Utility.slideSpecimenIntake(robot, Utility.Stage.ZERO, 1.0);
+
+        Utility.turnToPID(robot, 0);
 
         Utility.encoderDrive(robot, Utility.Direction.RIGHT,0.5, 33);
 
@@ -44,19 +54,33 @@ public class NonBucketRed extends LinearOpMode {
 
         Utility.encoderDrive(robot, Utility.Direction.LEFT,0.5, 11);
 
+        Utility.turnToPID(robot, 180);
+
         Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 40);
+
+        Utility.turnToPID(robot, 180);
 
         Utility.encoderDrive(robot, Utility.Direction.BACKWARD,0.5, 40);
 
-        Utility.encoderDrive(robot, Utility.Direction.LEFT,0.5, 10);
+        Utility.turnToPID(robot, 180);
+
+        Utility.encoderDrive(robot, Utility.Direction.LEFT,0.5, 8);
+
+        Utility.turnToPID(robot, 180);
 
         Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5,40);
 
-        Utility.encoderDrive(robot, Utility.Direction.BACKWARD,0.5, 1);
+        Utility.turnToPID(robot, 180);
 
-        Utility.encoderDrive(robot, Utility.Direction.RIGHT,0.5, 10);
+        Utility.encoderDrive(robot, Utility.Direction.BACKWARD,0.5, 2);
 
-        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 7);
+        Utility.turnToPID(robot, 180);
+
+        Utility.encoderDrive(robot, Utility.Direction.RIGHT,0.5, 15);
+
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 11);
+
+        Utility.encoderDrive(robot, Utility.Direction.LEFT,0.5, 3);
 
         robot.getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_CLOSE_POSITION);
         sleep(200);
@@ -67,13 +91,12 @@ public class NonBucketRed extends LinearOpMode {
 
         Utility.turnToPID(robot, 0);
 
-        Utility.encoderDrive(robot, Utility.Direction.LEFT,0.5, 40);
+        Utility.encoderDrive(robot, Utility.Direction.LEFT,0.5, 37);
 
-        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 5);
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 2);
 
         hangSpecimen();
 
-       // Utility.turnToPID(robot, -45);
     }
 
     protected void hangSpecimen() {

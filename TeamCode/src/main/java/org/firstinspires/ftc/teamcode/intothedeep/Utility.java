@@ -141,8 +141,10 @@ public class Utility {
 //            robot.setZeroPowerBehaviorForSlide();
 
 
-            // Turn off RUN_TO_POSITION
-//            robot.setModeForSlide(DcMotorEx.RunMode.RUN_USING_ENCODER);
+//            robot.getMyOpMode().telemetry.addData("Left Slide Motor PID: ", robot.getLeftSlide().getPIDFCoefficients(robot.getLeftSlide().getMode()));
+//            robot.getMyOpMode().telemetry.addData("Right Slide Motor PID: ", robot.getRightSlide().getPIDFCoefficients(robot.getRightSlide().getMode()));
+//            robot.getMyOpMode().telemetry.update();
+//            robot.getMyOpMode().sleep(5000);
         }
     }
 
