@@ -107,29 +107,15 @@ public class RobotHardware {
 
 
         // Servos
-//        leftSlideServo  = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_LEFT_SLIDE_SERVO);
-//        rightSlideServo = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_RIGHT_SLIDE_SERVO);
         shoulderServo  = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_SHOULDER_SERVO);
         elbowServo  = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_ELBOW_SERVO);
         wristServo  = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_WRIST_SERVO);
         fingerServo  = myOpMode.hardwareMap.get(Servo.class, Constants.DEVICE_FINGER_SERVO);
 
-
-//        frontIntakeServo = myOpMode.hardwareMap.get(Servo.class, Constants.FRONT_INTAKE_SERVO);
-//        backIntakeServo  = myOpMode.hardwareMap.get(Servo.class, Constants.BACK_INTAKE_SERVO);
-//        intakePanServo  = myOpMode.hardwareMap.get(Servo.class, Constants.INTAKE_PAN_SERVO);
-
         specimenIntakeServo  = myOpMode.hardwareMap.get(Servo.class, Constants.SPECIMEN_INTAKE_SERVO);
         outtakePanServo  = myOpMode.hardwareMap.get(Servo.class, Constants.OUTTAKE_PAN_SERVO);
 
-//        getLeftSlideServo().setDirection(Servo.Direction.REVERSE);
-//        getLeftSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);
-
-//        getRightSlideServo().setDirection(Servo.Direction.FORWARD);
-//        getRightSlideServo().setPosition(Constants.SLIDE_SERVO_HOME_POSITION);
-
-
-        getElbowServo().setDirection(Servo.Direction.FORWARD);
+        getElbowServo().setDirection(Servo.Direction.REVERSE);
         getElbowServo().setPosition(Constants.ELBOW_SERVO_HOME_POSITION);
         myOpMode.sleep(300);
 
@@ -137,7 +123,7 @@ public class RobotHardware {
         getShoulderServo().setPosition(Constants.SHOULDER_SERVO_HOME_POSITION);
 
         getWristServo().setDirection(Servo.Direction.REVERSE);
-        getWristServo().setPosition(Constants.WRIST_SERVO_HOME_POSITION);
+        getWristServo().setPosition(Constants.WRIST_SERVO_90_POSITION);
 
         getFingerServo().setDirection(Servo.Direction.REVERSE);
         getFingerServo().setPosition(Constants.FINGER_SERVO_STOP_POSITION);
@@ -147,15 +133,6 @@ public class RobotHardware {
 
         getOuttakePanServo().setDirection(Servo.Direction.REVERSE);
         getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_HOME_POSITION);
-
-//        getFrontIntakeServo().setDirection(Servo.Direction.FORWARD);
-//        getFrontIntakeServo().setPosition(Constants.MID_SERVO);
-
-//        getBackIntakeServo().setDirection(Servo.Direction.FORWARD);
-//        getBackIntakeServo().setPosition(Constants.MID_SERVO);
-
-//        getIntakePanServo().setDirection(Servo.Direction.FORWARD);
-//        getIntakePanServo().setPosition(Constants.INTAKE_PAN_SERVO_HOME_POSITION);
 
         setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -182,8 +159,6 @@ public class RobotHardware {
         getRightSlide().setPositionPIDFCoefficients(5.0);
 
         getSpecimenIntakeMotor().setPositionPIDFCoefficients(5.0);
-
-//        INTAKE_PAN_MOTOR_LOWER_LIMIT = getIntakePanMotor().getCurrentPosition();
     }
 
     public void setMotorPowers(double leftFront, double rightFront, double leftBack, double rightBack) {
@@ -245,11 +220,11 @@ public class RobotHardware {
             getLeftSlide().setTargetPosition(LEFT_SLIDE_LOWER_LIMIT + 50);
             getRightSlide().setTargetPosition(RIGHT_SLIDE_LOWER_LIMIT + 50);
         } else if (stage == Utility.Stage.ONE) {
-            getLeftSlide().setTargetPosition(LEFT_SLIDE_UPPER_LIMIT - 2500);
-            getRightSlide().setTargetPosition(RIGHT_SLIDE_UPPER_LIMIT - 2500);
+            getLeftSlide().setTargetPosition(LEFT_SLIDE_LOWER_LIMIT + 1950);
+            getRightSlide().setTargetPosition(LEFT_SLIDE_LOWER_LIMIT + 1950);
         } else if (stage == Utility.Stage.TWO) {
-            getLeftSlide().setTargetPosition(LEFT_SLIDE_UPPER_LIMIT - 250);
-            getRightSlide().setTargetPosition(RIGHT_SLIDE_UPPER_LIMIT - 250);
+            getLeftSlide().setTargetPosition(LEFT_SLIDE_LOWER_LIMIT + 2450);
+            getRightSlide().setTargetPosition(LEFT_SLIDE_LOWER_LIMIT + 2450);
         } else if (stage == Utility.Stage.THREE) {
             getLeftSlide().setTargetPosition(LEFT_SLIDE_UPPER_LIMIT);
             getRightSlide().setTargetPosition(RIGHT_SLIDE_UPPER_LIMIT);

@@ -123,6 +123,10 @@ public class MainTeleOp extends LinearOpMode {
                 if (gamepad1.dpad_left) {
                     Target_Angle = 90;
                 }
+                if (gamepad1.a) {
+                    Target_Angle = -45;
+                }
+
                 if (gamepad1.dpad_down) {
                     if (Theta_Actual < 0) {
                         Target_Angle = -180;
@@ -187,6 +191,8 @@ public class MainTeleOp extends LinearOpMode {
 
                 // NOTE: This program is single threaded right now. So we can't do multiple operations at once.
 
+
+
                 if (gamepad1.right_bumper) {
                     Utility.slideSpecimenIntake(robot, Utility.Stage.THREE,1.0); // good
                 }
@@ -208,7 +214,7 @@ public class MainTeleOp extends LinearOpMode {
                 }
 
                 if (gamepad2.back) {
-                    robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_HOME_POSITION);
+                    robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_RECEIVE_POSITION);
                     Utility.slide(robot, Utility.Stage.ZERO,1.0); //home + 50
                 }
 
@@ -226,20 +232,23 @@ public class MainTeleOp extends LinearOpMode {
                     robot.getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_OPEN_POSITION);
                 }
 
-                if (gamepad1.a) {
+                if (gamepad1.b) {
                     robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_DELIVERY_POSITION);
                 }
 
                 // Deliver the sample to the outtakePan
                 if (gamepad2.right_bumper) {
                     robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_RECEIVE_POSITION);
+                    robot.getFingerServo().setPosition(Constants.FINGER_SERVO_STOP_POSITION);
                     robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_DELIVERY_POSITION);
                     robot.getElbowServo().setPosition(Constants.ELBOW_SERVO_DELIVERY_POSITION);
-                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_HOME_POSITION);
+                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_90_POSITION);
+                    sleep(1600);
                     robot.getFingerServo().setPosition(Constants.FINGER_SERVO_RUN_OPPOSITE_POSITION);
-                    sleep(300);
+                    sleep(50);
                     robot.getFingerServo().setPosition(Constants.FINGER_SERVO_STOP_POSITION);
-                    robot.getShoulderServo().setPosition(0.6);
+                    sleep(300);
+                    robot.getShoulderServo().setPosition(0.4);
                     sleep(300);
                     robot.getElbowServo().setPosition(Constants.ELBOW_SERVO_HOME_POSITION);
                     robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_HOME_POSITION);
@@ -247,6 +256,10 @@ public class MainTeleOp extends LinearOpMode {
 
                 if (gamepad2.left_trigger > 0.5) {
                     robot.getFingerServo().setPosition(Constants.FINGER_SERVO_RUN_OPPOSITE_POSITION);
+                }
+
+                if (gamepad2.right_trigger > 0.5) {
+                    robot.getFingerServo().setPosition(Constants.FINGER_SERVO_RUN_POSITION);
                 }
 
                 if (gamepad2.left_bumper) {
@@ -258,7 +271,10 @@ public class MainTeleOp extends LinearOpMode {
                 }
 
                 if (gamepad2.b) {
+                    robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_RECEIVE_POSITION);
                     robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_PICKUP_POSITION);
+                    sleep(600);
+                    robot.getElbowServo().setPosition(0.2);
                     robot.getElbowServo().setPosition(Constants.ELBOW_SERVO_PICKUP_POSITION);
                 }
 
@@ -269,16 +285,21 @@ public class MainTeleOp extends LinearOpMode {
 //                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_HOME_POSITION);
 //                }
                 if (gamepad2.dpad_down) {
-                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_HOME_POSITION);
+                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_135_POSITION);
                 }
                 if (gamepad2.dpad_left) {
-                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_45_POSITION);
+                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_270_POSITION);
                 }
                 if (gamepad2.dpad_up) {
-                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_90_POSITION);
+                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_180_POSITION);
                 }
                 if (gamepad2.dpad_right) {
-                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_180_POSITION);
+                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_90_POSITION);
+                }
+
+                // This variable controls whether we are manually steering or auto steering.
+                if( gamepad1.back) {
+                    enableManualOverride = !enableManualOverride;
                 }
 
                 // Press this button to reset the yaw during Teleop. Only allow this to happen if we are in manual mode.
