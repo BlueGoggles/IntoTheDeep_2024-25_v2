@@ -13,6 +13,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 @TeleOp(name = "MainTeleOp")
 public class MainTeleOp extends LinearOpMode {
 
+    Utility.Stage CURRENT_SLIDE_STAGE = Utility.Stage.ZERO;
+    Utility.Stage CURRENT_SPECIMEN_INTAKE_SLIDE_STAGE = Utility.Stage.ZERO;
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
      */
@@ -123,7 +125,7 @@ public class MainTeleOp extends LinearOpMode {
                 if (gamepad1.dpad_left) {
                     Target_Angle = 90;
                 }
-                if (gamepad1.a) {
+                if (gamepad1.y) {
                     Target_Angle = -45;
                 }
 
@@ -193,30 +195,48 @@ public class MainTeleOp extends LinearOpMode {
 
 
 
-                if (gamepad1.right_bumper) {
-                    Utility.slideSpecimenIntake(robot, Utility.Stage.THREE,1.0); // good
+                if (gamepad2.right_bumper) {
+                    Utility.slideSpecimenIntake(robot, nextStage(CURRENT_SLIDE_STAGE),1.0); // good
                 }
 
-                if (gamepad1.x) {
-                    Utility.slideSpecimenIntake(robot, Utility.Stage.ZERO,1.0);  //good
+                if (gamepad2.left_bumper) {
+                    Utility.slideSpecimenIntake(robot, previousStage(CURRENT_SLIDE_STAGE),1.0); // good
+                }
+
+                if (gamepad2.right_trigger > 0.5) {
+                    Utility.slide(robot, nextStage(CURRENT_SLIDE_STAGE),1.0); // good
+                }
+
+                if (gamepad2.left_trigger > 0.5) {
+                    robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_RECEIVE_POSITION);
+                    Utility.slide(robot, previousStage(CURRENT_SLIDE_STAGE),1.0); // good
+                }
+
+                if (gamepad1.right_trigger > 0.5) {
+                    Utility.slide(robot, nextStage(CURRENT_SLIDE_STAGE),1.0); // good
+                }
+
+                if (gamepad1.left_trigger > 0.5) {
+                    robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_RECEIVE_POSITION);
+                    Utility.slide(robot, previousStage(CURRENT_SLIDE_STAGE),1.0); // good
+                }
+
+                if (gamepad1.right_bumper) {
+                    Utility.slideSpecimenIntake(robot, Utility.Stage.THREE,1.0); // good
                 }
 
                 if (gamepad1.left_bumper) {
                     Utility.slideSpecimenIntake(robot, Utility.Stage.TWO,1.0);  // good
                 }
 
-                if (gamepad1.y) {
-                    Utility.slideSpecimenIntake(robot, Utility.Stage.ONE,1.0);  // good
-                }
-
                 if (gamepad2.start) {
                     Utility.slide(robot, Utility.Stage.THREE,1.0); // basket delivery
                 }
 
-                if (gamepad2.back) {
-                    robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_RECEIVE_POSITION);
-                    Utility.slide(robot, Utility.Stage.ZERO,1.0); //home + 50
-                }
+//                if (gamepad2.back) {
+//                    robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_RECEIVE_POSITION);
+//                    Utility.slide(robot, Utility.Stage.ZERO,1.0); //home + 50
+//                }
 
                 if (gamepad1.start) {
                     robot.getLeftSlide().setPositionPIDFCoefficients(3.0);
@@ -224,20 +244,20 @@ public class MainTeleOp extends LinearOpMode {
                     Utility.slide(robot, Utility.Stage.ONE,1.0);  // bottom hang position
                 }
 
-                if (gamepad1.right_trigger > 0.5) {
+                if (gamepad1.a) {
                     robot.getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_CLOSE_POSITION);
                 }
 
-                if (gamepad1.left_trigger > 0.5) {
+                if (gamepad1.b) {
                     robot.getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_OPEN_POSITION);
                 }
 
-                if (gamepad1.b) {
+                if (gamepad1.x) {
                     robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_DELIVERY_POSITION);
                 }
 
                 // Deliver the sample to the outtakePan
-                if (gamepad2.right_bumper) {
+                if (gamepad2.back) {
                     robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_RECEIVE_POSITION);
                     robot.getFingerServo().setPosition(Constants.FINGER_SERVO_STOP_POSITION);
                     robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_DELIVERY_POSITION);
@@ -254,36 +274,42 @@ public class MainTeleOp extends LinearOpMode {
                     robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_HOME_POSITION);
                 }
 
-                if (gamepad2.left_trigger > 0.5) {
-                    robot.getFingerServo().setPosition(Constants.FINGER_SERVO_RUN_OPPOSITE_POSITION);
-                }
-
-                if (gamepad2.right_trigger > 0.5) {
-                    robot.getFingerServo().setPosition(Constants.FINGER_SERVO_RUN_POSITION);
-                }
-
-                if (gamepad2.left_bumper) {
-                    robot.getFingerServo().setPosition(Constants.FINGER_SERVO_STOP_POSITION);
+                if (gamepad2.b) {
+                    if (robot.getFingerServo().getPosition() == Constants.FINGER_SERVO_STOP_POSITION) {
+                        robot.getFingerServo().setPosition(Constants.FINGER_SERVO_RUN_OPPOSITE_POSITION);
+                        sleep(300);
+                    } else {
+                        robot.getFingerServo().setPosition(Constants.FINGER_SERVO_STOP_POSITION);
+                        sleep(300);
+                    }
                 }
 
                 if (gamepad2.a) {
-                    robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_HOME_POSITION);
+                    if (robot.getFingerServo().getPosition() == Constants.FINGER_SERVO_STOP_POSITION) {
+                        robot.getFingerServo().setPosition(Constants.FINGER_SERVO_RUN_POSITION);
+                        sleep(300);
+                    } else {
+                        robot.getFingerServo().setPosition(Constants.FINGER_SERVO_STOP_POSITION);
+                        sleep(300);
+                    }
                 }
 
-                if (gamepad2.b) {
+                if (gamepad2.x) {
+
+                }
+
+                if (gamepad2.y) {
                     robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_RECEIVE_POSITION);
-                    robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_PICKUP_POSITION);
-                    sleep(600);
-                    robot.getElbowServo().setPosition(0.2);
-                    robot.getElbowServo().setPosition(Constants.ELBOW_SERVO_PICKUP_POSITION);
+
+                    if (robot.getShoulderServo().getPosition() != Constants.SHOULDER_SERVO_PICKUP_POSITION) {
+                        robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_PICKUP_POSITION);
+                        sleep(300);
+                    } else {
+                        robot.getElbowServo().setPosition(Constants.ELBOW_SERVO_PICKUP_POSITION);
+                        sleep(300);
+                    }
                 }
 
-//                if (gamepad2.right_bumper) {
-//                    robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_RECEIVE_POSITION);
-//                    robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_DELIVERY_POSITION);
-//                    robot.getElbowServo().setPosition(Constants.ELBOW_SERVO_DELIVERY_POSITION);
-//                    robot.getWristServo().setPosition(Constants.WRIST_SERVO_HOME_POSITION);
-//                }
                 if (gamepad2.dpad_down) {
                     robot.getWristServo().setPosition(Constants.WRIST_SERVO_135_POSITION);
                 }
@@ -319,13 +345,53 @@ public class MainTeleOp extends LinearOpMode {
 
                 telemetry.addData("Specimen Intake Motor position: ", robot.getSpecimenIntakeMotor().getCurrentPosition());
 
-//                telemetry.addData("Finger Servo: ", robot.getFrontIntakeServo().getPosition());
-//                telemetry.addData("Back Intake Servo: ", robot.getBackIntakeServo().getPosition());
-//                telemetry.addData("Shoulder Servo: ", robot.getShoulderServo().getPosition());
-//                telemetry.addData("Slide Servo: ", robot.getLeftSlideServo().getPosition());
+                telemetry.addData("CURRENT_SLIDE_STAGE: ", CURRENT_SLIDE_STAGE);
+                telemetry.addData("CURRENT_SPECIMEN_INTAKE_SLIDE_STAGE: ", CURRENT_SPECIMEN_INTAKE_SLIDE_STAGE);
+                telemetry.addData("Shoulder Servo Position: ", robot.getShoulderServo().getPosition());
+                telemetry.addData("Elbow Servo Position: ", robot.getElbowServo().getPosition());
+                telemetry.addData("Wrist Servo Position: ", robot.getWristServo().getPosition());
+                telemetry.addData("Finger Servo Position: ", robot.getFingerServo().getPosition());
 
                 telemetry.update();
             }
+        }
+    }
+
+    private Utility.Stage nextStage(Utility.Stage currentStage) {
+
+        if(currentStage == Utility.Stage.ZERO) {
+            CURRENT_SLIDE_STAGE = Utility.Stage.ONE;
+            return Utility.Stage.ONE;
+        } else if(currentStage == Utility.Stage.ONE) {
+            CURRENT_SLIDE_STAGE = Utility.Stage.TWO;
+            return Utility.Stage.TWO;
+        } else if(currentStage == Utility.Stage.TWO) {
+            CURRENT_SLIDE_STAGE = Utility.Stage.THREE;
+            return Utility.Stage.THREE;
+        } else if(currentStage == Utility.Stage.THREE) {
+            CURRENT_SLIDE_STAGE = Utility.Stage.THREE;
+            return Utility.Stage.THREE;
+        } else {
+            return currentStage;
+        }
+    }
+
+    private Utility.Stage previousStage(Utility.Stage currentStage) {
+
+        if(currentStage == Utility.Stage.ZERO) {
+            CURRENT_SLIDE_STAGE = Utility.Stage.ZERO;
+            return Utility.Stage.ZERO;
+        } else if(currentStage == Utility.Stage.ONE) {
+            CURRENT_SLIDE_STAGE = Utility.Stage.ZERO;
+            return Utility.Stage.ZERO;
+        } else if(currentStage == Utility.Stage.TWO) {
+            CURRENT_SLIDE_STAGE = Utility.Stage.ONE;
+            return Utility.Stage.ONE;
+        } else if(currentStage == Utility.Stage.THREE) {
+            CURRENT_SLIDE_STAGE = Utility.Stage.TWO;
+            return Utility.Stage.TWO;
+        } else {
+            return currentStage;
         }
     }
 }
