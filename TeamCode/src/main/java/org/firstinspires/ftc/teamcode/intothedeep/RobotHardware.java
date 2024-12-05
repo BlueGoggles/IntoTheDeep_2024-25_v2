@@ -173,6 +173,10 @@ public class RobotHardware {
         this.getRightSlide().setPower(speed);
     }
 
+    public void setMotorPowersForRightSlide(double speed) {
+        this.getRightSlide().setPower(speed);
+    }
+
     public void setMotorPowersForSpecimenIntakeMotor(double speed) {
         this.getSpecimenIntakeMotor().setPower(speed);
     }
@@ -190,6 +194,10 @@ public class RobotHardware {
 
     public void setModeForSlide(DcMotorEx.RunMode mode) {
         getLeftSlide().setMode(mode);
+        getRightSlide().setMode(mode);
+    }
+
+    public void setModeForRightSlide(DcMotorEx.RunMode mode) {
         getRightSlide().setMode(mode);
     }
 
@@ -221,12 +229,26 @@ public class RobotHardware {
             getRightSlide().setTargetPosition(RIGHT_SLIDE_LOWER_LIMIT + 50);
         } else if (stage == Utility.Stage.ONE) {
             getLeftSlide().setTargetPosition(LEFT_SLIDE_LOWER_LIMIT + 1950);
-            getRightSlide().setTargetPosition(LEFT_SLIDE_LOWER_LIMIT + 1950);
+            getRightSlide().setTargetPosition(RIGHT_SLIDE_LOWER_LIMIT + 1950);
         } else if (stage == Utility.Stage.TWO) {
-            getLeftSlide().setTargetPosition(LEFT_SLIDE_LOWER_LIMIT + 2450);
-            getRightSlide().setTargetPosition(LEFT_SLIDE_LOWER_LIMIT + 2450);
+            getLeftSlide().setTargetPosition(LEFT_SLIDE_LOWER_LIMIT + 3100);
+            getRightSlide().setTargetPosition(RIGHT_SLIDE_LOWER_LIMIT + 3100);
         } else if (stage == Utility.Stage.THREE) {
             getLeftSlide().setTargetPosition(LEFT_SLIDE_UPPER_LIMIT);
+            getRightSlide().setTargetPosition(RIGHT_SLIDE_UPPER_LIMIT);
+        }
+    }
+
+    public void setTargetPositionForRightSlide(Utility.Stage stage) {
+
+        // Determine new target position, and pass to motor controller
+        if (stage == Utility.Stage.ZERO) {
+            getRightSlide().setTargetPosition(RIGHT_SLIDE_LOWER_LIMIT + 50);
+        } else if (stage == Utility.Stage.ONE) {
+            getRightSlide().setTargetPosition(RIGHT_SLIDE_LOWER_LIMIT + 1950);
+        } else if (stage == Utility.Stage.TWO) {
+            getRightSlide().setTargetPosition(RIGHT_SLIDE_LOWER_LIMIT + 2450);
+        } else if (stage == Utility.Stage.THREE) {
             getRightSlide().setTargetPosition(RIGHT_SLIDE_UPPER_LIMIT);
         }
     }
@@ -302,7 +324,7 @@ public class RobotHardware {
 
         IMU.Parameters parameters = new IMU.Parameters(orientationOnRobot);
 
-        imu = myOpMode.hardwareMap.get(IMU.class, Constants.DEVICE_IMU);
+        imu = myOpMode.hardwareMap.get(IMU.class, Constants.EXPANSION_IMU);
         imu.initialize(parameters);
         imu.resetYaw();
     }

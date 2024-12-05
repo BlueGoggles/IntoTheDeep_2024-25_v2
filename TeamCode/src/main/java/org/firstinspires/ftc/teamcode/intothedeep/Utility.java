@@ -128,23 +128,35 @@ public class Utility {
 
             // Start the motion.
             robot.setMotorPowersForSlide(Math.abs(speed));
-//
-//            ElapsedTime slideTime = new ElapsedTime();
-//            slideTime.reset();
 
             while (robot.getMyOpMode().opModeIsActive() && robot.getLeftSlide().isBusy() && robot.getRightSlide().isBusy()) {
                 // Engage the control
             }
 
-            // Stop all motion;
-//            robot.setMotorPowersForSlide(Constants.ZERO_POWER);
-//            robot.setZeroPowerBehaviorForSlide();
+
+        }
+    }
+
+    public static void rightSlide(RobotHardware robot, Utility.Stage stage, double speed) {
+
+        // Ensure that the OpMode is still active
+        if (robot.getMyOpMode().opModeIsActive()) {
+
+            // Set Target Position
+            robot.setTargetPositionForRightSlide(stage);
 
 
-//            robot.getMyOpMode().telemetry.addData("Left Slide Motor PID: ", robot.getLeftSlide().getPIDFCoefficients(robot.getLeftSlide().getMode()));
-//            robot.getMyOpMode().telemetry.addData("Right Slide Motor PID: ", robot.getRightSlide().getPIDFCoefficients(robot.getRightSlide().getMode()));
-//            robot.getMyOpMode().telemetry.update();
-//            robot.getMyOpMode().sleep(5000);
+            // Turn On RUN_TO_POSITION
+            robot.setModeForRightSlide(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+            // Start the motion.
+            robot.setMotorPowersForRightSlide(Math.abs(speed));
+
+            while (robot.getMyOpMode().opModeIsActive() && robot.getRightSlide().isBusy()) {
+                // Engage the control
+            }
+
+
         }
     }
 
@@ -162,78 +174,12 @@ public class Utility {
 
             // Start the motion.
             robot.setMotorPowersForSpecimenIntakeMotor(Math.abs(speed));
-//
-//            ElapsedTime slideTime = new ElapsedTime();
-//            slideTime.reset();
 
             while (robot.getMyOpMode().opModeIsActive() && robot.getSpecimenIntakeMotor().isBusy()) {
                 // Engage the control
             }
-
-            // Stop all motion;
-//            robot.setMotorPowersForSlide(Constants.ZERO_POWER);
-//            robot.setZeroPowerBehaviorForSpecimenIntakeMotor();
-
-            // Turn off RUN_TO_POSITION
-//            robot.setModeForSpecimenIntakeMotor(DcMotorEx.RunMode.RUN_USING_ENCODER);
         }
     }
-
-//    public static void turnIntakePan(RobotHardware robot, int intakePanMotorTixCount) {
-//        Utility.turnIntakePan(robot, intakePanMotorTixCount, false);
-//    }
-
-//    public static void turnIntakePan(RobotHardware robot, int intakePanMotorTixCount, boolean manualMode) {
-//
-//        // Ensure that the OpMode is still active
-//        if (robot.getMyOpMode().opModeIsActive()) {
-//
-//            // Set Target Position
-//            robot.setTargetPositionForIntakePanMotor(intakePanMotorTixCount, manualMode);
-//
-//
-//            // Turn On RUN_TO_POSITION
-//            robot.setModeForIntakePanMotor(DcMotorEx.RunMode.RUN_TO_POSITION);
-//
-//            // Start the motion.
-//            robot.setMotorPowersForIntakePanMotor(0.6);
-//
-//            while (robot.getMyOpMode().opModeIsActive() && robot.getIntakePanMotor().isBusy()) {
-//                // Engage the control
-//            }
-//
-//            robot.setZeroPowerBehaviorForIntakePanMotor();
-//        }
-//    }
-
-//    public static void turn(RobotHardware robot, Utility.Direction direction, double inches, double speed) {
-//
-//        // Ensure that the OpMode is still active
-//        if (robot.getMyOpMode().opModeIsActive()) {
-//
-//            // Set Target Position
-//            robot.turn(direction, inches);
-//
-//
-//            // Turn On RUN_TO_POSITION
-//            robot.setModeForTurn(DcMotorEx.RunMode.RUN_TO_POSITION);
-//
-//            // Start the motion.
-//            robot.setMotorPowersForTurn(Math.abs(speed));
-//
-//            while (robot.getMyOpMode().opModeIsActive() &&
-//                    (robot.getLeftTurn().isBusy() && robot.getRightTurn().isBusy())) {
-//                // Engage the control
-//            }
-//
-//            // Stop all motion;
-//            robot.setMotorPowersForTurn(Constants.ZERO_POWER);
-//            robot.setZeroPowerBehaviorForTurn();
-//
-//            // Turn off RUN_TO_POSITION
-//            robot.setModeForTurn(DcMotorEx.RunMode.RUN_USING_ENCODER);
-//        }
-//    }
 
     public static void encoderDrive(RobotHardware robot, Utility.Direction direction, double speed, double leftFrontInches, double rightFrontInches, double leftBackInches, double rightBackInches) {
 

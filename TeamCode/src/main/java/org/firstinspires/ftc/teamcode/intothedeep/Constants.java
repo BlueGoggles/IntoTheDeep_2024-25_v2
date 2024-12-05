@@ -108,7 +108,7 @@ public interface Constants {
     double SHOULDER_SERVO_DELIVERY_POSITION = 0.33;
 
     double ELBOW_SERVO_HOME_POSITION = 0.8;
-    double ELBOW_SERVO_PICKUP_POSITION = 0.02;
+    double ELBOW_SERVO_PICKUP_POSITION = 0.00;
     double ELBOW_SERVO_DELIVERY_POSITION = 0.55;
 
     double WRIST_SERVO_135_POSITION = 0.45;
@@ -142,7 +142,7 @@ public interface Constants {
 
     int INITIAL_WAIT_TIME_FOR_FRONT_STAGE = 7000; // MilliSeconds
 
-    int SLIDE_TIX_COUNT = 3750;
+    int SLIDE_TIX_COUNT = 3780;
     int SPECIMEN_INTAKE_MOTOR_SLIDE_TIX_COUNT = 2000;
 
     double APRIL_TAG_DETECTION_WAIT_TIME = 1500; // MilliSeconds

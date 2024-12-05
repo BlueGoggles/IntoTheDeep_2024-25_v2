@@ -63,6 +63,9 @@ public class MainTeleOp extends LinearOpMode {
 //        robot.initializeDroneLauncher();
         sleep(400);
 
+        double shoulder_nudge = 0;
+        double shoulder_nudge_step = 0.01;
+
         FL_Power = 0;
         FR_Power = 0;
         BL_Power = 0;
@@ -204,20 +207,23 @@ public class MainTeleOp extends LinearOpMode {
                 }
 
                 if (gamepad2.right_trigger > 0.5) {
-                    Utility.slide(robot, nextStage(CURRENT_SLIDE_STAGE),1.0); // good
+                    Utility.rightSlide(robot, nextStage(CURRENT_SLIDE_STAGE),1.0); // good
                 }
 
                 if (gamepad2.left_trigger > 0.5) {
                     robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_RECEIVE_POSITION);
-                    Utility.slide(robot, previousStage(CURRENT_SLIDE_STAGE),1.0); // good
+                    Utility.rightSlide(robot, previousStage(CURRENT_SLIDE_STAGE),1.0); // good
                 }
 
                 if (gamepad1.right_trigger > 0.5) {
+                    robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_HOME_POSITION);
+                    sleep(200);
                     Utility.slide(robot, nextStage(CURRENT_SLIDE_STAGE),1.0); // good
                 }
 
                 if (gamepad1.left_trigger > 0.5) {
-                    robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_RECEIVE_POSITION);
+                    robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_HOME_POSITION);
+                    sleep(200);
                     Utility.slide(robot, previousStage(CURRENT_SLIDE_STAGE),1.0); // good
                 }
 
@@ -227,21 +233,6 @@ public class MainTeleOp extends LinearOpMode {
 
                 if (gamepad1.left_bumper) {
                     Utility.slideSpecimenIntake(robot, Utility.Stage.TWO,1.0);  // good
-                }
-
-                if (gamepad2.start) {
-                    Utility.slide(robot, Utility.Stage.THREE,1.0); // basket delivery
-                }
-
-//                if (gamepad2.back) {
-//                    robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_RECEIVE_POSITION);
-//                    Utility.slide(robot, Utility.Stage.ZERO,1.0); //home + 50
-//                }
-
-                if (gamepad1.start) {
-                    robot.getLeftSlide().setPositionPIDFCoefficients(3.0);
-//                    Utility.slide(robot, Utility.Stage.TWO,1.0);
-                    Utility.slide(robot, Utility.Stage.ONE,1.0);  // bottom hang position
                 }
 
                 if (gamepad1.a) {
@@ -272,6 +263,7 @@ public class MainTeleOp extends LinearOpMode {
                     sleep(300);
                     robot.getElbowServo().setPosition(Constants.ELBOW_SERVO_HOME_POSITION);
                     robot.getShoulderServo().setPosition(Constants.SHOULDER_SERVO_HOME_POSITION);
+                    shoulder_nudge = 0;
                 }
 
                 if (gamepad2.b) {
@@ -298,6 +290,7 @@ public class MainTeleOp extends LinearOpMode {
 
                 }
 
+
                 if (gamepad2.y) {
                     robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_RECEIVE_POSITION);
 
@@ -323,15 +316,32 @@ public class MainTeleOp extends LinearOpMode {
                     robot.getWristServo().setPosition(Constants.WRIST_SERVO_90_POSITION);
                 }
 
+                // nudge shoulder up
+                if( gamepad2.left_stick_y > 0.2 ) {
+                    shoulder_nudge = shoulder_nudge + shoulder_nudge_step;
+                    double shoulder_pos = Constants.SHOULDER_SERVO_PICKUP_POSITION + shoulder_nudge;
+                    robot.getShoulderServo().setPosition(shoulder_pos);
+                    sleep(300);
+                }
+
+                // nudge shoulder down
+                if( gamepad2.left_stick_y < -0.2 ) {
+                    shoulder_nudge = shoulder_nudge - shoulder_nudge_step;
+                    double shoulder_pos = Constants.SHOULDER_SERVO_PICKUP_POSITION + shoulder_nudge;
+                    robot.getShoulderServo().setPosition(shoulder_pos);
+                    sleep(300);
+                }
+
                 // This variable controls whether we are manually steering or auto steering.
                 if( gamepad1.back) {
                     enableManualOverride = !enableManualOverride;
+                    sleep(300);
                 }
 
                 // Press this button to reset the yaw during Teleop. Only allow this to happen if we are in manual mode.
-//                if (gamepad1.y && enableManualOverride) {
-//                    robot.getImu().resetYaw();
-//                }
+                if (gamepad1.start && enableManualOverride) {
+                    robot.getImu().resetYaw();
+                }
 
                 telemetry.addData("Front Left Power: ", robot.getLeftFront().getPower());
                 telemetry.addData("Front Right Power: ", robot.getRightFront().getPower());
