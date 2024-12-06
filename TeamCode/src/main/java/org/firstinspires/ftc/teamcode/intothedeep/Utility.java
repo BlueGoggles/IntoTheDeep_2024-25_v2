@@ -24,6 +24,7 @@ public class Utility {
     }
 
     public enum Stage {
+        HOME,
         ZERO,
         ONE,
         TWO,

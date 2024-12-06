@@ -224,7 +224,10 @@ public class RobotHardware {
     public void setTargetPositionForSlide(Utility.Stage stage) {
 
         // Determine new target position, and pass to motor controller
-        if (stage == Utility.Stage.ZERO) {
+        if (stage == Utility.Stage.HOME) {
+            getLeftSlide().setTargetPosition(LEFT_SLIDE_LOWER_LIMIT);
+            getRightSlide().setTargetPosition(RIGHT_SLIDE_LOWER_LIMIT);
+        } else if (stage == Utility.Stage.ZERO) {
             getLeftSlide().setTargetPosition(LEFT_SLIDE_LOWER_LIMIT + 50);
             getRightSlide().setTargetPosition(RIGHT_SLIDE_LOWER_LIMIT + 50);
         } else if (stage == Utility.Stage.ONE) {
@@ -242,7 +245,9 @@ public class RobotHardware {
     public void setTargetPositionForRightSlide(Utility.Stage stage) {
 
         // Determine new target position, and pass to motor controller
-        if (stage == Utility.Stage.ZERO) {
+        if (stage == Utility.Stage.HOME) {
+            getRightSlide().setTargetPosition(RIGHT_SLIDE_LOWER_LIMIT);
+        } else if (stage == Utility.Stage.ZERO) {
             getRightSlide().setTargetPosition(RIGHT_SLIDE_LOWER_LIMIT + 50);
         } else if (stage == Utility.Stage.ONE) {
             getRightSlide().setTargetPosition(RIGHT_SLIDE_LOWER_LIMIT + 1950);
@@ -255,12 +260,14 @@ public class RobotHardware {
 
     public void setTargetPositionForSpecimenIntakeMotor(Utility.Stage stage) {
 
-        if (stage == Utility.Stage.ZERO) {
+        if (stage == Utility.Stage.HOME) {
+            getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_LOWER_LIMIT);
+        } else if (stage == Utility.Stage.ZERO) {
             getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_LOWER_LIMIT + 100);
         } else if (stage == Utility.Stage.ONE) {
             getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_LOWER_LIMIT + 200);
         } else if (stage == Utility.Stage.TWO) {
-            getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_UPPER_LIMIT - 685);
+            getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_LOWER_LIMIT + 1290);
         } else if (stage == Utility.Stage.THREE) {
             getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_UPPER_LIMIT);
         }
