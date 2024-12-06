@@ -133,7 +133,6 @@ public class Utility {
                 // Engage the control
             }
 
-
         }
     }
 
@@ -155,7 +154,6 @@ public class Utility {
             while (robot.getMyOpMode().opModeIsActive() && robot.getRightSlide().isBusy()) {
                 // Engage the control
             }
-
 
         }
     }
@@ -360,9 +358,11 @@ public class Utility {
         if (robot.getVisionPortal().getCameraState() != VisionPortal.CameraState.STREAMING) {
             robot.getMyOpMode().telemetry.addData("Camera", "Waiting");
             robot.getMyOpMode().telemetry.update();
+            /*
             while (!robot.getMyOpMode().isStopRequested() && (robot.getVisionPortal().getCameraState() != VisionPortal.CameraState.STREAMING)) {
                 robot.getMyOpMode().sleep(20);
             }
+            */
         }
 
         // Set camera controls unless we are stopping.

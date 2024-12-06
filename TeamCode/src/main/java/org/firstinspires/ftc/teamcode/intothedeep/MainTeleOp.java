@@ -64,7 +64,6 @@ public class MainTeleOp extends LinearOpMode {
         sleep(400);
 
         double shoulder_nudge = 0;
-        double shoulder_nudge_step = 0.01;
 
         FL_Power = 0;
         FR_Power = 0;
@@ -318,7 +317,7 @@ public class MainTeleOp extends LinearOpMode {
 
                 // nudge shoulder up
                 if( gamepad2.left_stick_y > 0.2 ) {
-                    shoulder_nudge = shoulder_nudge + shoulder_nudge_step;
+                    shoulder_nudge = shoulder_nudge + Constants.SHOULDER_NUDGE_STEP;
                     double shoulder_pos = Constants.SHOULDER_SERVO_PICKUP_POSITION + shoulder_nudge;
                     robot.getShoulderServo().setPosition(shoulder_pos);
                     sleep(300);
@@ -326,7 +325,7 @@ public class MainTeleOp extends LinearOpMode {
 
                 // nudge shoulder down
                 if( gamepad2.left_stick_y < -0.2 ) {
-                    shoulder_nudge = shoulder_nudge - shoulder_nudge_step;
+                    shoulder_nudge = shoulder_nudge - Constants.SHOULDER_NUDGE_STEP;
                     double shoulder_pos = Constants.SHOULDER_SERVO_PICKUP_POSITION + shoulder_nudge;
                     robot.getShoulderServo().setPosition(shoulder_pos);
                     sleep(300);

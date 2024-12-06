@@ -98,7 +98,8 @@ public interface Constants {
     double PAN_TILT_ANGLE = 0.01;
     long PAN_TILT_TIME_MS = 10;
 
-    double SLIDE_SERVO_HOME_POSITION = 0.55;
+    //double SLIDE_SERVO_HOME_POSITION = 0.55;
+    double SLIDE_SERVO_HOME_POSITION = 0.10;
     double SLIDE_SERVO_PICKUP_POSITION = 0.98;
     double SLIDE_SERVO_CARRY_POSITION = 0.8;
     double SLIDE_SERVO_DELIVERY_POSITION = 0.97;
@@ -106,6 +107,8 @@ public interface Constants {
     double SHOULDER_SERVO_HOME_POSITION = 0.3;
     double SHOULDER_SERVO_PICKUP_POSITION = 0.55;
     double SHOULDER_SERVO_DELIVERY_POSITION = 0.33;
+
+    double SHOULDER_NUDGE_STEP = 0.02;
 
     double ELBOW_SERVO_HOME_POSITION = 0.8;
     double ELBOW_SERVO_PICKUP_POSITION = 0.00;
