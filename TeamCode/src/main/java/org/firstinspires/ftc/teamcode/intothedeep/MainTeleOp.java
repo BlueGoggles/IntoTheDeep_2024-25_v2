@@ -198,6 +198,9 @@ public class MainTeleOp extends LinearOpMode {
 
 
                 if (gamepad2.right_bumper) {
+                    if ( CURRENT_SLIDE_STAGE == Utility.Stage.ONE) {
+                        CURRENT_SLIDE_STAGE = Utility.Stage.TWO;
+                    }
                     Utility.slideSpecimenIntake(robot, nextStage(CURRENT_SLIDE_STAGE),1.0); // good
                 }
 
@@ -226,14 +229,6 @@ public class MainTeleOp extends LinearOpMode {
                     Utility.slide(robot, previousStage(CURRENT_SLIDE_STAGE),1.0); // good
                 }
 
-                if (gamepad1.right_bumper) {
-                    Utility.slideSpecimenIntake(robot, Utility.Stage.THREE,1.0); // good
-                }
-
-                if (gamepad1.left_bumper) {
-                    Utility.slideSpecimenIntake(robot, Utility.Stage.TWO,1.0);  // good
-                }
-
                 if (gamepad1.a) {
                     robot.getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_CLOSE_POSITION);
                 }
@@ -244,6 +239,10 @@ public class MainTeleOp extends LinearOpMode {
 
                 if (gamepad1.x) {
                     robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_DELIVERY_POSITION);
+                }
+
+                if (gamepad1.right_bumper) {
+                    robot.getOuttakePanServo().setPosition(Constants.OUTTAKE_PAN_SERVO_RECEIVE_POSITION);
                 }
 
                 // Deliver the sample to the outtakePan

@@ -32,7 +32,7 @@ public class NonBucketRed extends LinearOpMode {
 
     protected void hangOnRobotSpecimen() {
 
-        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.7, 20);
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.7, 19);
         Utility.turnToPID(robot, 0);
         Utility.encoderDrive(robot, Utility.Direction.LEFT,0.5, 8);
         Utility.turnToPID(robot, 0);
@@ -40,46 +40,52 @@ public class NonBucketRed extends LinearOpMode {
         hangSpecimen();
 
         Utility.slideSpecimenIntake(robot, Utility.Stage.ZERO, 1.0);
-        Utility.turnToPID(robot, -90);
+        Utility.turnToPID(robot, -105);
 
-        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 41);
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 44);
         Utility.turnToPID(robot, 180);
-        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 14);
-        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.2, 8);
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.2, 6);
         Utility.turnToPID(robot, -180);
 
         robot.getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_CLOSE_POSITION);
         sleep(200);
         Utility.slideSpecimenIntake(robot, Utility.Stage.ONE, 1.0);
 
-        Utility.encoderDrive(robot, Utility.Direction.BACKWARD,0.5, 6);
-        Utility.turnToPID(robot, 90);
-        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 36);
+        Utility.encoderDrive(robot, Utility.Direction.BACKWARD,0.2, 6);
+        Utility.turnToPID(robot, 75);
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 44);
         Utility.turnToPID(robot, 0);
-        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 10);
-        Utility.turnToPID(robot, 0);
+        Utility.encoderDrive(robot, Utility.Direction.RIGHT,0.2, 3);
 
         hangSpecimen();
 
+        Utility.slideSpecimenIntake(robot, Utility.Stage.ZERO, 1.0);
+        Utility.turnToPID(robot, -90);
+
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 30);
+        Utility.turnToPID(robot, 180);
+        Utility.encoderDrive(robot, Utility.Direction.BACKWARD,0.7, 26);
+        Utility.turnToPID(robot, 180);
+        Utility.encoderDrive(robot, Utility.Direction.LEFT,0.5, 9.5);
+        Utility.turnToPID(robot, 180);
+
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.8, 37);
+        Utility.turnToPID(robot, 180);
+
+        // Second Push Start
+        Utility.encoderDrive(robot, Utility.Direction.BACKWARD,0.7, 43);
+        Utility.turnToPID(robot, 180);
+        Utility.encoderDrive(robot, Utility.Direction.LEFT,0.5, 11);
+        Utility.turnToPID(robot, 180);
+        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.8,43);
+        // Second Push End
+
+        Utility.encoderDrive(robot, Utility.Direction.BACKWARD,0.7,1);
+        Utility.turnToPID(robot, 0);
+        Utility.turnToPID(robot, 0);
         Utility.slideSpecimenIntake(robot, Utility.Stage.HOME, 1.0);
+        Utility.encoderDrive(robot, Utility.Direction.BACKWARD,0.7,3);
         Utility.turnToPID(robot, 0);
-
-        Utility.encoderDrive(robot, Utility.Direction.RIGHT,0.5, 34);
-        Utility.turnToPID(robot, 0);
-        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 24);
-        Utility.turnToPID(robot, 180);
-        Utility.encoderDrive(robot, Utility.Direction.LEFT,0.5, 10);
-        Utility.turnToPID(robot, 180);
-
-        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 40);
-        Utility.turnToPID(robot, 180);
-        Utility.encoderDrive(robot, Utility.Direction.BACKWARD,0.5, 40);
-        Utility.turnToPID(robot, 180);
-        Utility.encoderDrive(robot, Utility.Direction.LEFT,0.5, 8);
-        Utility.turnToPID(robot, 180);
-        Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5,40);
-        Utility.turnToPID(robot, 0);
-
     }
 
     protected void hangSpecimen() {
@@ -88,6 +94,6 @@ public class NonBucketRed extends LinearOpMode {
         Utility.encoderDrive(robot, Utility.Direction.FORWARD,0.5, 5);
         Utility.slideSpecimenIntake(robot, Utility.Stage.TWO, 1.0);
         robot.getSpecimenIntakeServo().setPosition(Constants.SPECIMEN_INTAKE_SERVO_OPEN_POSITION);
-        Utility.encoderDrive(robot, Utility.Direction.BACKWARD,0.7, 5);
+        Utility.encoderDrive(robot, Utility.Direction.BACKWARD,0.5, 5);
     }
 }

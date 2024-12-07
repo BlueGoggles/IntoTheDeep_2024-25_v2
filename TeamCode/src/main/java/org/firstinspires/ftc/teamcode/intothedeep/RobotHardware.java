@@ -155,10 +155,10 @@ public class RobotHardware {
         Utility.slideSpecimenIntake(this, Utility.Stage.ZERO,0.8);
 
 
-        getLeftSlide().setPositionPIDFCoefficients(5.0);
-        getRightSlide().setPositionPIDFCoefficients(5.0);
+//        getLeftSlide().setPositionPIDFCoefficients(5.0);
+//        getRightSlide().setPositionPIDFCoefficients(5.0);
 
-        getSpecimenIntakeMotor().setPositionPIDFCoefficients(5.0);
+//        getSpecimenIntakeMotor().setPositionPIDFCoefficients(5.0);
     }
 
     public void setMotorPowers(double leftFront, double rightFront, double leftBack, double rightBack) {
@@ -263,7 +263,7 @@ public class RobotHardware {
         if (stage == Utility.Stage.HOME) {
             getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_LOWER_LIMIT);
         } else if (stage == Utility.Stage.ZERO) {
-            getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_LOWER_LIMIT + 100);
+            getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_LOWER_LIMIT + 20);
         } else if (stage == Utility.Stage.ONE) {
             getSpecimenIntakeMotor().setTargetPosition(SPECIMEN_INTAKE_MOTOR_SLIDE_LOWER_LIMIT + 200);
         } else if (stage == Utility.Stage.TWO) {
